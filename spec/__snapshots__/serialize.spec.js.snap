@@ -1,5 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`serialize with relationships with valid data with a local id serializes the data and relationships 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "lid": "666",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with relationships with valid data with a normal id serializes the data and relationships 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "id": "666",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with simple attributes with empty attributes serializes no attributes key 1`] = `
+Object {
+  "data": Object {
+    "id": "125",
+    "type": "users",
+  },
+}
+`;
+
 exports[`serialize with simple attributes with valid data serializes the data 1`] = `
 Object {
   "data": Object {

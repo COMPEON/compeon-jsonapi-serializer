@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`deserialize with relationships with valid relationships with a local id deserializes the json 1`] = `
+Object {
+  "company": Object {
+    "lid": "666",
+  },
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with relationships with valid relationships with a normal id deserializes the json 1`] = `
+Object {
+  "company": Object {
+    "id": "666",
+  },
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
 exports[`deserialize with simple attributes with invalid attributes deserializes the json 1`] = `Object {}`;
 
 exports[`deserialize with simple attributes with valid attributes deserializes the json 1`] = `
