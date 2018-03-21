@@ -1,2 +1,2 @@
 export { deserialize } from './deserialize'
-export { serialize } from './serialize.js'
+export { serialize } from './serialize'

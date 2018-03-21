@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`deserialize with simple attributes with invalid attributes deserializes the json 1`] = `Object {}`;
+
+exports[`deserialize with simple attributes with valid attributes deserializes the json 1`] = `
+Object {
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`serialize with simple attributes with valid data serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "123",
+    "type": "users",
+  },
+}
+`;

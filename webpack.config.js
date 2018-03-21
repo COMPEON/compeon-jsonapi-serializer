@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   entry: './src/index.js',
+  externals: {
+    lodash: 'lodash'
+  },
   module: {
     rules: [
       {
@@ -16,5 +19,6 @@ module.exports = {
     library: 'compeon-jsonapi-serializer',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')
-  }
+  },
+  target: 'node'
 }
