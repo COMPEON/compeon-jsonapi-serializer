@@ -1,0 +1,39 @@
+{
+  "name": "compeon-jsonapi-serializer",
+  "version": "0.0.1",
+  "description": "Client-side serialization for and deserialization of JSON API documents.",
+  "main": "index.js",
+  "author": "Gerrit Seger",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --mode production --config webpack.config.js",
+    "lint": "eslint src",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "6",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.4.2",
+    "path": "^0.12.7",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.12"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}
