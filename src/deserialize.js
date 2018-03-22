@@ -1,4 +1,4 @@
-import { each, get } from 'lodash'
+import { each, find, get } from 'lodash'
 
 const getId = (id, lid) => {
   if (id) return { id: String(id) }
@@ -9,12 +9,22 @@ export const deserialize = (options = {}) => object => {
   const id = get(object, 'data.id')
   const result = get(object, 'data.attributes', {})
   const relationships = get(object, 'data.relationships', {})
+  const included = get(object, 'included', {})
 
   each(relationships, (relationship, relationshipName) => {
     const data = get(relationship, 'data', {})
     const { id, lid, type } = data
 
-    result[relationshipName] = getId(id, lid)
+    const include = find(included, {
+      ...getId(id, lid),
+      type
+    })
+
+    const dissolvedRelationship = include
+      ? { ...getId(id, lid), ...include.attributes }
+      : getId(id, lid)
+
+    result[relationshipName] = dissolvedRelationship
   })
 
   if (id !== undefined) result.id = id

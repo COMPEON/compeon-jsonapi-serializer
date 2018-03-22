@@ -1,6 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`serialize with relationships with valid data with a local id serializes the data and relationships 1`] = `
+exports[`serialize with relationships with includes serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "1234",
+    "included": Array [
+      Object {
+        "attributes": Object {
+          "name": "Compeong GmbH",
+        },
+        "id": "612",
+        "type": "companies",
+      },
+    ],
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "id": "612",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with relationships with valid data with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -21,7 +51,7 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with valid data with a normal id serializes the data and relationships 1`] = `
+exports[`serialize with relationships with valid data with a normal id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {

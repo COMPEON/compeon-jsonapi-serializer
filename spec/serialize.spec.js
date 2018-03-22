@@ -63,7 +63,7 @@ describe('serialize', () => {
 
         const serializeUser = serialize('users', options)
 
-        it('serializes the data and relationships', () => {
+        it('serializes the data', () => {
           expect(serializeUser(data)).toMatchSnapshot()
         })
       })
@@ -89,7 +89,7 @@ describe('serialize', () => {
 
         const serializeUser = serialize('users', options)
 
-        it('serializes the data and relationships', () => {
+        it('serializes the data', () => {
           expect(serializeUser(data)).toMatchSnapshot()
         })
       })
@@ -99,7 +99,6 @@ describe('serialize', () => {
       describe('when no relationship type is set', () => {
         const data = {
           id: '123',
-          type: 'users',
           company: {
             id: '612'
           }
@@ -117,6 +116,33 @@ describe('serialize', () => {
         it('throws an error', () => {
           expect(() => userSerializer(data)).toThrowError()
         })
+      })
+    })
+
+    describe('with includes', () => {
+      const data = {
+        id: '1234',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        company: {
+          id: '612',
+          name: 'Compeong GmbH'
+        }
+      }
+      const options = {
+        attributes: ['firstName', 'lastName', 'company'],
+        relationships: {
+          company: {
+            attributes: ['name'],
+            type: 'companies'
+          }
+        }
+      }
+
+      const userSerializer = serialize('users', options)
+
+      it('serializes the data', () => {
+        expect(userSerializer(data)).toMatchSnapshot()
       })
     })
   })

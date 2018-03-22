@@ -82,5 +82,73 @@ describe('deserialize', () => {
         })
       })
     })
+
+    describe('with includes', () => {
+      describe('with a normal id', () => {
+        const json = {
+          data: {
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            relationships: {
+              company: {
+                data: {
+                  id: '666',
+                  type: 'companies'
+                }
+              }
+            },
+            id: '123',
+            type: 'users'
+          },
+          included: [{
+            id: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeong GmbH',
+              city: 'Düsseldorf'
+            }
+          }]
+        }
+
+        it.only('deserializes the json', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+
+      describe('with a local id', () => {
+        const json = {
+          data: {
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            relationships: {
+              company: {
+                data: {
+                  lid: '666',
+                  type: 'companies'
+                }
+              }
+            },
+            id: '123',
+            type: 'users'
+          },
+          included: [{
+            lid: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeong GmbH',
+              city: 'Düsseldorf'
+            }
+          }]
+        }
+
+        it.only('deserializes the json', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+    })
   })
 })
