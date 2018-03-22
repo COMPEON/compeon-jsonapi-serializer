@@ -26,7 +26,6 @@ export const serialize = (type, options = {}) => {
 
       if (Array.isArray(relationshipData)) {
         const finalRelationships = []
-        console.log('lawfawf')
 
         each(relationshipData, (relationshipDataSet, index) => {
           const id = get(relationshipDataSet, `id`)

@@ -32,6 +32,60 @@ describe('deserialize', () => {
 
   describe('with relationships', () => {
     describe('with valid relationships', () => {
+      describe('with a 1:1 relationship', () => {
+        describe('with a normal id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                company: {
+                  data: {
+                    id: '666',
+                    type: 'companies'
+                  }
+                }
+              },
+              id: '123',
+              type: 'users'
+            }
+          }
+
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                company: {
+                  data: {
+                    lid: '666',
+                    type: 'companies'
+                  }
+                }
+              },
+              id: '123',
+              type: 'users'
+            }
+          }
+
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
+        })
+      })
+    })
+
+    describe('with a 1:n relationship', () => {
       describe('with a normal id', () => {
         const json = {
           data: {
@@ -40,11 +94,17 @@ describe('deserialize', () => {
               lastName: 'Peters'
             },
             relationships: {
-              company: {
-                data: {
-                  id: '666',
-                  type: 'companies'
-                }
+              companies: {
+                data: [
+                  {
+                    id: '666',
+                    type: 'companies'
+                  },
+                  {
+                    id: '667',
+                    type: 'companies'
+                  }
+                ]
               }
             },
             id: '123',
@@ -65,11 +125,17 @@ describe('deserialize', () => {
               lastName: 'Peters'
             },
             relationships: {
-              company: {
-                data: {
-                  lid: '666',
-                  type: 'companies'
-                }
+              companies: {
+                data: [
+                  {
+                    lid: '666',
+                    type: 'companies'
+                  },
+                  {
+                    id: '667',
+                    type: 'companies'
+                  }
+                ]
               }
             },
             id: '123',
@@ -82,8 +148,10 @@ describe('deserialize', () => {
         })
       })
     })
+  })
 
-    describe('with includes', () => {
+  describe('with includes', () => {
+    describe('with a 1:1 relationship', () => {
       describe('with a normal id', () => {
         const json = {
           data: {
@@ -112,7 +180,7 @@ describe('deserialize', () => {
           }]
         }
 
-        it.only('deserializes the json', () => {
+        it('deserializes the json', () => {
           expect(deserialize()(json)).toMatchSnapshot()
         })
       })
@@ -139,15 +207,115 @@ describe('deserialize', () => {
             lid: '666',
             type: 'companies',
             attributes: {
-              name: 'Compeong GmbH',
+              name: 'Compeon GmbH',
               city: 'Düsseldorf'
             }
           }]
         }
 
-        it.only('deserializes the json', () => {
+        it('deserializes the json', () => {
           expect(deserialize()(json)).toMatchSnapshot()
         })
+      })
+    })
+  })
+
+  describe('with a 1:n relationship', () => {
+    describe('with a normal id', () => {
+      const json = {
+        data: {
+          attributes: {
+            firstName: 'Nico',
+            lastName: 'Peters'
+          },
+          relationships: {
+            companies: {
+              data: [
+                {
+                  id: '666',
+                  type: 'companies'
+                },
+                {
+                  id: '667',
+                  type: 'companies'
+                }
+              ]
+            }
+          },
+          id: '123',
+          type: 'users'
+        },
+        included: [
+          {
+            id: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon GmbH',
+              city: 'Düsseldorf'
+            }
+          },
+          {
+            id: '667',
+            type: 'companies',
+            attributes: {
+              name: 'Compeong 4.0 GmbH',
+              city: 'Düsseldorf'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a local id', () => {
+      const json = {
+        data: {
+          attributes: {
+            firstName: 'Nico',
+            lastName: 'Peters'
+          },
+          relationships: {
+            companies: {
+              data: [
+                {
+                  lid: '666',
+                  type: 'companies'
+                },
+                {
+                  id: '667',
+                  type: 'companies'
+                }
+              ]
+            }
+          },
+          id: '123',
+          type: 'users'
+        },
+        included: [
+          {
+            lid: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon GmbH',
+              city: 'Düsseldorf'
+            }
+          },
+          {
+            id: '667',
+            type: 'companies',
+            attributes: {
+              name: 'Compeong 4.0 GmbH',
+              city: 'Düsseldorf'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
       })
     })
   })

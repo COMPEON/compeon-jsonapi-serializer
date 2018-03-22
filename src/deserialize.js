@@ -1,4 +1,4 @@
-import { each, find, get } from 'lodash'
+import { each, find, get, isPlainObject } from 'lodash'
 
 const getId = (id, lid) => {
   if (id) return { id: String(id) }
@@ -12,19 +12,40 @@ export const deserialize = (options = {}) => object => {
   const included = get(object, 'included', {})
 
   each(relationships, (relationship, relationshipName) => {
-    const data = get(relationship, 'data', {})
-    const { id, lid, type } = data
+    const data = get(relationship, 'data')
 
-    const include = find(included, {
-      ...getId(id, lid),
-      type
-    })
+    if (Array.isArray(data)) {
+      const finalRelationships = []
+      each(data, (relationshipDataSet, index) => {
+        const { id, lid, type } = relationshipDataSet
 
-    const dissolvedRelationship = include
-      ? { ...getId(id, lid), ...include.attributes }
-      : getId(id, lid)
+        const include = find(included, {
+          ...getId(id, lid),
+          type
+        })
 
-    result[relationshipName] = dissolvedRelationship
+        const dissolvedRelationship = include
+          ? { ...getId(id, lid), ...include.attributes }
+          : getId(id, lid)
+
+        finalRelationships.push(dissolvedRelationship)
+      })
+
+      result[relationshipName] = finalRelationships
+    } else if (isPlainObject(data)) {
+      const { id, lid, type } = data
+
+      const include = find(included, {
+        ...getId(id, lid),
+        type
+      })
+
+      const dissolvedRelationship = include
+        ? { ...getId(id, lid), ...include.attributes }
+        : getId(id, lid)
+
+      result[relationshipName] = dissolvedRelationship
+    }
   })
 
   if (id !== undefined) result.id = id

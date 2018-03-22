@@ -212,7 +212,7 @@ describe('serialize', () => {
 
           const userSerializer = serialize('users', options)
 
-          it.only('ignores the faulty relationship and serializes the valid one', () => {
+          it('ignores the faulty relationship and serializes the valid one', () => {
             expect(userSerializer(data)).toMatchSnapshot()
           })
         })

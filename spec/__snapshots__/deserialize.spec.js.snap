@@ -1,11 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`deserialize with relationships with includes with a local id deserializes the json 1`] = `
+exports[`deserialize with a 1:n relationship with a local id deserializes the json 1`] = `
+Object {
+  "companies": Array [
+    Object {
+      "city": "Düsseldorf",
+      "lid": "666",
+      "name": "Compeon GmbH",
+    },
+    Object {
+      "city": "Düsseldorf",
+      "id": "667",
+      "name": "Compeong 4.0 GmbH",
+    },
+  ],
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with a 1:n relationship with a normal id deserializes the json 1`] = `
+Object {
+  "companies": Array [
+    Object {
+      "city": "Düsseldorf",
+      "id": "666",
+      "name": "Compeon GmbH",
+    },
+    Object {
+      "city": "Düsseldorf",
+      "id": "667",
+      "name": "Compeong 4.0 GmbH",
+    },
+  ],
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with includes with a 1:1 relationship with a local id deserializes the json 1`] = `
 Object {
   "company": Object {
     "city": "Düsseldorf",
     "lid": "666",
-    "name": "Compeong GmbH",
+    "name": "Compeon GmbH",
   },
   "firstName": "Nico",
   "id": "123",
@@ -13,7 +53,7 @@ Object {
 }
 `;
 
-exports[`deserialize with relationships with includes with a normal id deserializes the json 1`] = `
+exports[`deserialize with includes with a 1:1 relationship with a normal id deserializes the json 1`] = `
 Object {
   "company": Object {
     "city": "Düsseldorf",
@@ -26,7 +66,39 @@ Object {
 }
 `;
 
-exports[`deserialize with relationships with valid relationships with a local id deserializes the json 1`] = `
+exports[`deserialize with relationships with a 1:n relationship with a local id deserializes the json 1`] = `
+Object {
+  "companies": Array [
+    Object {
+      "lid": "666",
+    },
+    Object {
+      "id": "667",
+    },
+  ],
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with relationships with a 1:n relationship with a normal id deserializes the json 1`] = `
+Object {
+  "companies": Array [
+    Object {
+      "id": "666",
+    },
+    Object {
+      "id": "667",
+    },
+  ],
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with relationships with valid relationships with a 1:1 relationship with a local id deserializes the json 1`] = `
 Object {
   "company": Object {
     "lid": "666",
@@ -37,7 +109,7 @@ Object {
 }
 `;
 
-exports[`deserialize with relationships with valid relationships with a normal id deserializes the json 1`] = `
+exports[`deserialize with relationships with valid relationships with a 1:1 relationship with a normal id deserializes the json 1`] = `
 Object {
   "company": Object {
     "id": "666",
