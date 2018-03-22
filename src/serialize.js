@@ -22,36 +22,73 @@ export const serialize = (type, options = {}) => {
     const relationships = {}
 
     each(options.relationships, (relationship, relationshipName) => {
-      const id = get(whitelistedAttributes, `${relationshipName}.id`)
-      const lid = get(whitelistedAttributes, `${relationshipName}.lid`)
-      const relationshipAttributes = pick(whitelistedAttributes[relationshipName], relationship.attributes)
+      const relationshipData = whitelistedAttributes[relationshipName]
 
-      if (id === undefined && lid === undefined) return
-      if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
+      if (Array.isArray(relationshipData)) {
+        const finalRelationships = []
+        console.log('lawfawf')
 
-      const finalRelationship = {
-        data: {
-          ...getId(id, lid),
-          type: relationship.type
-        }
-      }
+        each(relationshipData, (relationshipDataSet, index) => {
+          const id = get(relationshipDataSet, `id`)
+          const lid = get(relationshipDataSet, `lid`)
+          const relationshipAttributes = pick(relationshipDataSet, relationship.attributes)
 
-      if (!isEmpty(relationshipAttributes)) {
-        included.push({
-          ...getId(id, lid),
-          type: relationship.type,
-          attributes: relationshipAttributes
+          if (id === undefined && lid === undefined) return
+          if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
+
+          const finalRelationship = {
+            ...getId(id, lid),
+            type: relationship.type
+          }
+
+          if (!isEmpty(relationshipAttributes)) {
+            included.push({
+              ...getId(id, lid),
+              type: relationship.type,
+              attributes: relationshipAttributes
+            })
+          }
+
+          finalRelationships.push(finalRelationship)
         })
-      }
 
-      relationships[relationshipName] = finalRelationship
+        if (!isEmpty(finalRelationships)) {
+          relationships[relationshipName] = {
+            data: finalRelationships
+          }
+        }
+      } else {
+        const id = get(whitelistedAttributes, `${relationshipName}.id`)
+        const lid = get(whitelistedAttributes, `${relationshipName}.lid`)
+        const relationshipAttributes = pick(whitelistedAttributes[relationshipName], relationship.attributes)
+
+        if (id === undefined && lid === undefined) return
+        if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
+
+        const finalRelationship = {
+          data: {
+            ...getId(id, lid),
+            type: relationship.type
+          }
+        }
+
+        if (!isEmpty(relationshipAttributes)) {
+          included.push({
+            ...getId(id, lid),
+            type: relationship.type,
+            attributes: relationshipAttributes
+          })
+        }
+
+        relationships[relationshipName] = finalRelationship
+      }
 
       delete whitelistedAttributes[relationshipName]
     })
 
     if (!isEmpty(whitelistedAttributes)) result.data.attributes = whitelistedAttributes
     if (!isEmpty(relationships)) result.data.relationships = relationships
-    if (!isEmpty(included)) result.data.included = included
+    if (!isEmpty(included)) result.included = included
 
     return result
   }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`serialize with relationships with includes serializes the data 1`] = `
+exports[`serialize with relationships with includes with a 1:1 relationship with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -8,15 +8,36 @@ Object {
       "lastName": "Peters",
     },
     "id": "1234",
-    "included": Array [
-      Object {
-        "attributes": Object {
-          "name": "Compeong GmbH",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "lid": "612",
+          "type": "companies",
         },
-        "id": "612",
-        "type": "companies",
       },
-    ],
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeong GmbH",
+      },
+      "lid": "612",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with relationships with includes with a 1:1 relationship with a normal id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "1234",
     "relationships": Object {
       "company": Object {
         "data": Object {
@@ -27,10 +48,142 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeong GmbH",
+      },
+      "id": "612",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
-exports[`serialize with relationships with valid data with a local id serializes the data 1`] = `
+exports[`serialize with relationships with includes with a 1:n relationship with a local id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "lid": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "lid": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "name": "Compeong 4.0 GmbH",
+      },
+      "id": "667",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with relationships with includes with a 1:n relationship with a normal id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "name": "Compeong 4.0 GmbH",
+      },
+      "id": "667",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with relationships with invalid data when no relationship identifier is found with a 1:1 relationship ignores the relationship 1`] = `
+Object {
+  "data": Object {
+    "id": "123",
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with relationships with invalid data when no relationship identifier is found with a 1:n relationship ignores the faulty relationship and serializes the valid one 1`] = `
+Object {
+  "data": Object {
+    "id": "123",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with relationships with valid data with a 1:1 relationship with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -51,7 +204,7 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with valid data with a normal id serializes the data 1`] = `
+exports[`serialize with relationships with valid data with a 1:1 relationship with a normal id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -65,6 +218,60 @@ Object {
           "id": "666",
           "type": "companies",
         },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with relationships with valid data with a 1:n relationship with a local id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "lid": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with relationships with valid data with a 1:n relationship with a normal id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
       },
     },
     "type": "users",

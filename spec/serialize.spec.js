@@ -42,55 +42,179 @@ describe('serialize', () => {
 
   describe('with relationships', () => {
     describe('with valid data', () => {
-      describe('with a normal id', () => {
-        const data = {
-          id: '511',
-          firstName: 'Nico',
-          lastName: 'Peters',
-          company: {
-            id: '666',
-            name: 'Compeon GmbH'
-          }
-        }
-        const options = {
-          attributes: ['company', 'firstName', 'lastName'],
-          relationships: {
+      describe('with a 1:1 relationship', () => {
+        describe('with a normal id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
             company: {
-              type: 'companies'
+              id: '666',
+              name: 'Compeon GmbH'
             }
           }
-        }
+          const options = {
+            attributes: ['company', 'firstName', 'lastName'],
+            relationships: {
+              company: {
+                type: 'companies'
+              }
+            }
+          }
 
-        const serializeUser = serialize('users', options)
+          const serializeUser = serialize('users', options)
 
-        it('serializes the data', () => {
-          expect(serializeUser(data)).toMatchSnapshot()
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            company: {
+              lid: '666',
+              name: 'Compeon GmbH'
+            }
+          }
+          const options = {
+            attributes: ['company', 'firstName', 'lastName'],
+            relationships: {
+              company: {
+                type: 'companies'
+              }
+            }
+          }
+
+          const serializeUser = serialize('users', options)
+
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
         })
       })
 
-      describe('with a local id', () => {
-        const data = {
-          id: '511',
-          firstName: 'Nico',
-          lastName: 'Peters',
-          company: {
-            lid: '666',
-            name: 'Compeon GmbH'
+      describe('with a 1:n relationship', () => {
+        describe('with a normal id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            companies: [
+              {
+                id: '666',
+                name: 'Compeon GmbH'
+              },
+              {
+                id: '667',
+                name: 'Compeong 4.0 GmbH'
+              }
+            ]
           }
-        }
-        const options = {
-          attributes: ['company', 'firstName', 'lastName'],
-          relationships: {
-            company: {
-              type: 'companies'
+          const options = {
+            attributes: ['companies', 'firstName', 'lastName'],
+            relationships: {
+              companies: {
+                type: 'companies'
+              }
             }
           }
-        }
 
-        const serializeUser = serialize('users', options)
+          const serializeUser = serialize('users', options)
 
-        it('serializes the data', () => {
-          expect(serializeUser(data)).toMatchSnapshot()
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            companies: [
+              {
+                lid: '666',
+                name: 'Compeon GmbH'
+              },
+              {
+                id: '667',
+                name: 'Compeong 4.0 GmbH'
+              }
+            ]
+          }
+          const options = {
+            attributes: ['companies', 'firstName', 'lastName'],
+            relationships: {
+              companies: {
+                type: 'companies'
+              }
+            }
+          }
+
+          const serializeUser = serialize('users', options)
+
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
+        })
+      })
+    })
+
+    describe('with invalid data', () => {
+      describe('when no relationship identifier is found', () => {
+        describe('with a 1:1 relationship', () => {
+          const data = {
+            id: '123',
+            company: {
+              name: 'Compeon GmbH'
+            }
+          }
+          const options = {
+            relationships: {
+              company: {
+                type: 'companies'
+              }
+            }
+          }
+
+          const userSerializer = serialize('users', options)
+
+          it('ignores the relationship', () => {
+            expect(userSerializer(data)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a 1:n relationship', () => {
+          const data = {
+            id: '123',
+            companies: [
+              {
+                id: '666',
+                name: 'Compeon GmbH'
+              },
+              {
+                name: 'Compeong 4.0 GmbH'
+              }
+            ]
+          }
+          const options = {
+            attributes: ['companies'],
+            relationships: {
+              companies: {
+                attributes: ['name'],
+                type: 'companies'
+              }
+            }
+          }
+
+          const userSerializer = serialize('users', options)
+
+          it.only('ignores the faulty relationship and serializes the valid one', () => {
+            expect(userSerializer(data)).toMatchSnapshot()
+          })
         })
       })
     })
@@ -120,29 +244,128 @@ describe('serialize', () => {
     })
 
     describe('with includes', () => {
-      const data = {
-        id: '1234',
-        firstName: 'Nico',
-        lastName: 'Peters',
-        company: {
-          id: '612',
-          name: 'Compeong GmbH'
-        }
-      }
-      const options = {
-        attributes: ['firstName', 'lastName', 'company'],
-        relationships: {
-          company: {
-            attributes: ['name'],
-            type: 'companies'
+      describe('with a 1:1 relationship', () => {
+        describe('with a normal id', () => {
+          const data = {
+            id: '1234',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            company: {
+              id: '612',
+              name: 'Compeong GmbH'
+            }
           }
-        }
-      }
+          const options = {
+            attributes: ['firstName', 'lastName', 'company'],
+            relationships: {
+              company: {
+                attributes: ['name'],
+                type: 'companies'
+              }
+            }
+          }
 
-      const userSerializer = serialize('users', options)
+          const userSerializer = serialize('users', options)
 
-      it('serializes the data', () => {
-        expect(userSerializer(data)).toMatchSnapshot()
+          it('serializes the data', () => {
+            expect(userSerializer(data)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const data = {
+            id: '1234',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            company: {
+              lid: '612',
+              name: 'Compeong GmbH'
+            }
+          }
+          const options = {
+            attributes: ['firstName', 'lastName', 'company'],
+            relationships: {
+              company: {
+                attributes: ['name'],
+                type: 'companies'
+              }
+            }
+          }
+
+          const userSerializer = serialize('users', options)
+
+          it('serializes the data', () => {
+            expect(userSerializer(data)).toMatchSnapshot()
+          })
+        })
+      })
+
+      describe('with a 1:n relationship', () => {
+        describe('with a normal id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            companies: [
+              {
+                id: '666',
+                name: 'Compeon GmbH'
+              },
+              {
+                id: '667',
+                name: 'Compeong 4.0 GmbH'
+              }
+            ]
+          }
+          const options = {
+            attributes: ['companies', 'firstName', 'lastName'],
+            relationships: {
+              companies: {
+                attributes: ['name'],
+                type: 'companies'
+              }
+            }
+          }
+
+          const serializeUser = serialize('users', options)
+
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const data = {
+            id: '511',
+            firstName: 'Nico',
+            lastName: 'Peters',
+            companies: [
+              {
+                lid: '666',
+                name: 'Compeon GmbH'
+              },
+              {
+                id: '667',
+                name: 'Compeong 4.0 GmbH'
+              }
+            ]
+          }
+          const options = {
+            attributes: ['companies', 'firstName', 'lastName'],
+            relationships: {
+              companies: {
+                attributes: ['name'],
+                type: 'companies'
+              }
+            }
+          }
+
+          const serializeUser = serialize('users', options)
+
+          it('serializes the data', () => {
+            expect(serializeUser(data)).toMatchSnapshot()
+          })
+        })
       })
     })
   })
