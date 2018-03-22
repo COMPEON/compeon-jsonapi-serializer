@@ -20,12 +20,22 @@ describe('deserialize', () => {
     })
 
     describe('with invalid attributes', () => {
-      const json = {
-        data: {}
-      }
+      describe('when data is empty', () => {
+        const json = {
+          data: {}
+        }
 
-      it('deserializes the json', () => {
-        expect(deserialize()(json)).toMatchSnapshot()
+        it('deserializes the json', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+
+      describe('when data does not exist', () => {
+        const json = {}
+
+        it('deserializes the json', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
       })
     })
   })
@@ -83,238 +93,260 @@ describe('deserialize', () => {
           })
         })
       })
-    })
 
-    describe('with a 1:n relationship', () => {
-      describe('with a normal id', () => {
-        const json = {
-          data: {
-            attributes: {
-              firstName: 'Nico',
-              lastName: 'Peters'
-            },
-            relationships: {
-              companies: {
-                data: [
-                  {
-                    id: '666',
-                    type: 'companies'
-                  },
-                  {
-                    id: '667',
-                    type: 'companies'
-                  }
-                ]
-              }
-            },
-            id: '123',
-            type: 'users'
+      describe('with a 1:n relationship', () => {
+        describe('with a normal id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                companies: {
+                  data: [
+                    {
+                      id: '666',
+                      type: 'companies'
+                    },
+                    {
+                      id: '667',
+                      type: 'companies'
+                    }
+                  ]
+                }
+              },
+              id: '123',
+              type: 'users'
+            }
           }
-        }
 
-        it('deserializes the json', () => {
-          expect(deserialize()(json)).toMatchSnapshot()
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
+        })
+
+        describe('with a local id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                companies: {
+                  data: [
+                    {
+                      lid: '666',
+                      type: 'companies'
+                    },
+                    {
+                      id: '667',
+                      type: 'companies'
+                    }
+                  ]
+                }
+              },
+              id: '123',
+              type: 'users'
+            }
+          }
+
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
         })
       })
 
-      describe('with a local id', () => {
-        const json = {
-          data: {
-            attributes: {
-              firstName: 'Nico',
-              lastName: 'Peters'
-            },
-            relationships: {
-              companies: {
-                data: [
-                  {
-                    lid: '666',
-                    type: 'companies'
-                  },
-                  {
-                    id: '667',
-                    type: 'companies'
+      describe('with includes', () => {
+        describe('with a 1:1 relationship', () => {
+          describe('with a normal id', () => {
+            const json = {
+              data: {
+                attributes: {
+                  firstName: 'Nico',
+                  lastName: 'Peters'
+                },
+                relationships: {
+                  company: {
+                    data: {
+                      id: '666',
+                      type: 'companies'
+                    }
                   }
-                ]
-              }
-            },
-            id: '123',
-            type: 'users'
-          }
-        }
+                },
+                id: '123',
+                type: 'users'
+              },
+              included: [{
+                id: '666',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeong GmbH',
+                  city: 'Düsseldorf'
+                }
+              }]
+            }
 
-        it('deserializes the json', () => {
-          expect(deserialize()(json)).toMatchSnapshot()
+            it('deserializes the json', () => {
+              expect(deserialize()(json)).toMatchSnapshot()
+            })
+          })
+
+          describe('with a local id', () => {
+            const json = {
+              data: {
+                attributes: {
+                  firstName: 'Nico',
+                  lastName: 'Peters'
+                },
+                relationships: {
+                  company: {
+                    data: {
+                      lid: '666',
+                      type: 'companies'
+                    }
+                  }
+                },
+                id: '123',
+                type: 'users'
+              },
+              included: [{
+                lid: '666',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeon GmbH',
+                  city: 'Düsseldorf'
+                }
+              }]
+            }
+
+            it('deserializes the json', () => {
+              expect(deserialize()(json)).toMatchSnapshot()
+            })
+          })
         })
       })
-    })
-  })
 
-  describe('with includes', () => {
-    describe('with a 1:1 relationship', () => {
-      describe('with a normal id', () => {
-        const json = {
-          data: {
-            attributes: {
-              firstName: 'Nico',
-              lastName: 'Peters'
+      describe('with a 1:n relationship', () => {
+        describe('with a normal id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                companies: {
+                  data: [
+                    {
+                      id: '666',
+                      type: 'companies'
+                    },
+                    {
+                      id: '667',
+                      type: 'companies'
+                    }
+                  ]
+                }
+              },
+              id: '123',
+              type: 'users'
             },
-            relationships: {
-              company: {
-                data: {
-                  id: '666',
-                  type: 'companies'
+            included: [
+              {
+                id: '666',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeon GmbH',
+                  city: 'Düsseldorf'
+                }
+              },
+              {
+                id: '667',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeong 4.0 GmbH',
+                  city: 'Düsseldorf'
                 }
               }
-            },
-            id: '123',
-            type: 'users'
-          },
-          included: [{
-            id: '666',
-            type: 'companies',
-            attributes: {
-              name: 'Compeong GmbH',
-              city: 'Düsseldorf'
-            }
-          }]
-        }
+            ]
+          }
 
-        it('deserializes the json', () => {
-          expect(deserialize()(json)).toMatchSnapshot()
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
         })
-      })
 
-      describe('with a local id', () => {
-        const json = {
-          data: {
-            attributes: {
-              firstName: 'Nico',
-              lastName: 'Peters'
+        describe('with a local id', () => {
+          const json = {
+            data: {
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              },
+              relationships: {
+                companies: {
+                  data: [
+                    {
+                      lid: '666',
+                      type: 'companies'
+                    },
+                    {
+                      id: '667',
+                      type: 'companies'
+                    }
+                  ]
+                }
+              },
+              id: '123',
+              type: 'users'
             },
-            relationships: {
-              company: {
-                data: {
-                  lid: '666',
-                  type: 'companies'
+            included: [
+              {
+                lid: '666',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeon GmbH',
+                  city: 'Düsseldorf'
+                }
+              },
+              {
+                id: '667',
+                type: 'companies',
+                attributes: {
+                  name: 'Compeong 4.0 GmbH',
+                  city: 'Düsseldorf'
                 }
               }
-            },
-            id: '123',
-            type: 'users'
-          },
-          included: [{
-            lid: '666',
-            type: 'companies',
-            attributes: {
-              name: 'Compeon GmbH',
-              city: 'Düsseldorf'
-            }
-          }]
-        }
+            ]
+          }
 
-        it('deserializes the json', () => {
-          expect(deserialize()(json)).toMatchSnapshot()
+          it('deserializes the json', () => {
+            expect(deserialize()(json)).toMatchSnapshot()
+          })
         })
       })
     })
-  })
 
-  describe('with a 1:n relationship', () => {
-    describe('with a normal id', () => {
+    describe('with empty relationships', () => {
       const json = {
         data: {
           attributes: {
             firstName: 'Nico',
             lastName: 'Peters'
           },
-          relationships: {
-            companies: {
-              data: [
-                {
-                  id: '666',
-                  type: 'companies'
-                },
-                {
-                  id: '667',
-                  type: 'companies'
-                }
-              ]
-            }
-          },
           id: '123',
-          type: 'users'
-        },
-        included: [
-          {
-            id: '666',
-            type: 'companies',
-            attributes: {
-              name: 'Compeon GmbH',
-              city: 'Düsseldorf'
-            }
-          },
-          {
-            id: '667',
-            type: 'companies',
-            attributes: {
-              name: 'Compeong 4.0 GmbH',
-              city: 'Düsseldorf'
+          type: 'users',
+          relationships: {
+            company: {
+              data: null
             }
           }
-        ]
+        }
       }
 
-      it('deserializes the json', () => {
-        expect(deserialize()(json)).toMatchSnapshot()
-      })
-    })
-
-    describe('with a local id', () => {
-      const json = {
-        data: {
-          attributes: {
-            firstName: 'Nico',
-            lastName: 'Peters'
-          },
-          relationships: {
-            companies: {
-              data: [
-                {
-                  lid: '666',
-                  type: 'companies'
-                },
-                {
-                  id: '667',
-                  type: 'companies'
-                }
-              ]
-            }
-          },
-          id: '123',
-          type: 'users'
-        },
-        included: [
-          {
-            lid: '666',
-            type: 'companies',
-            attributes: {
-              name: 'Compeon GmbH',
-              city: 'Düsseldorf'
-            }
-          },
-          {
-            id: '667',
-            type: 'companies',
-            attributes: {
-              name: 'Compeong 4.0 GmbH',
-              city: 'Düsseldorf'
-            }
-          }
-        ]
-      }
-
-      it('deserializes the json', () => {
+      it('ignores the relationship', () => {
         expect(deserialize()(json)).toMatchSnapshot()
       })
     })
