@@ -6,10 +6,11 @@
   "extends": ["standard"],
   "parser": "babel-eslint",
   "rules": {
-    "semi"                              : [2, "never"],
-    "key-spacing"                       : 0,
-    "max-len"                           : [2, 120, 2],
-    "object-curly-spacing"              : [2, "always"],
-    "no-tabs"                           : 2
-  },
+    "semi"                : [2, "never"],
+    "key-spacing"         : 0,
+    "max-len"             : [2, 120, 2],
+    "object-curly-spacing": [2, "always"],
+    "no-tabs"             : 2,
+    "no-throw-literal"    : 0
+  }
 }
