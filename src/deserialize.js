@@ -6,10 +6,7 @@ import {
   reduce
 } from 'lodash'
 
-import {
-  extractIdentifier,
-  renderIdentifier
-} from './utils'
+import { extractIdentifier, renderIdentifier } from './common'
 
 const findInclude = (type, identifier, included) => (
   find(included, {

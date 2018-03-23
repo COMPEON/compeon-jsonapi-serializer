@@ -6,11 +6,8 @@ import {
   reduce
 } from 'lodash'
 
-import {
-  extractIdentifier,
-  partition,
-  renderIdentifier
-} from './utils'
+import { extractIdentifier, renderIdentifier } from './common'
+import { partition } from './utils'
 
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
@@ -85,9 +82,9 @@ const serializeResource = (type, resource, options, root = false) => {
   }
 }
 
-const serializeResources = (type, resources, options, root = false) =>
+const serializeResources = (type, resources, options) =>
   reduce(resources, (result, value, key) => {
-    const { data, included } = serializeResource(type, value, options, root)
+    const { data, included } = serializeResource(type, value, options)
 
     if (data === undefined) return result
 
@@ -104,94 +101,9 @@ const serializeResources = (type, resources, options, root = false) =>
 export const serialize = (type, options = {}) => {
   if (!type) throw 'You did not specify a type for the root resource.'
 
-  return subject => {
-    if (Array.isArray(subject)) {
-      return serializeResources(type, subject, options, true)
-    } else if (isPlainObject(subject)) {
-      return serializeResource(type, subject, options, true)
-    }
-
-    return renderResource(type)
-  //   const { id, ...attributes } = object
-  //   const whitelistedAttributes = pick(attributes, options.attributes)
-  //   const result = {
-  //     data: {
-  //       id,
-  //       type
-  //     }
-  //   }
-
-  //   const included = []
-  //   const relationships = {}
-
-  //   each(options.relationships, (relationship, relationshipName) => {
-  //     const relationshipData = whitelistedAttributes[relationshipName]
-
-  //     if (Array.isArray(relationshipData)) {
-  //       const finalRelationships = []
-
-  //       each(relationshipData, (relationshipDataSet, index) => {
-  //         const id = get(relationshipDataSet, `id`)
-  //         const lid = get(relationshipDataSet, `lid`)
-  //         const relationshipAttributes = pick(relationshipDataSet, relationship.attributes)
-
-  //         if (id === undefined && lid === undefined) return
-  //         if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
-
-  //         const finalRelationship = {
-  //           ...getId(id, lid),
-  //           type: relationship.type
-  //         }
-
-  //         if (!isEmpty(relationshipAttributes)) {
-  //           included.push({
-  //             ...getId(id, lid),
-  //             type: relationship.type,
-  //             attributes: relationshipAttributes
-  //           })
-  //         }
-
-  //         finalRelationships.push(finalRelationship)
-  //       })
-
-  //       if (!isEmpty(finalRelationships)) {
-  //         relationships[relationshipName] = {
-  //           data: finalRelationships
-  //         }
-  //       }
-  //     } else {
-  //       const id = get(whitelistedAttributes, `${relationshipName}.id`)
-  //       const lid = get(whitelistedAttributes, `${relationshipName}.lid`)
-  //       const relationshipAttributes = pick(whitelistedAttributes[relationshipName], relationship.attributes)
-
-  //       if (id === undefined && lid === undefined) return
-  //       if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
-
-  //       const finalRelationship = {
-  //         data: {
-  //           ...getId(id, lid),
-  //           type: relationship.type
-  //         }
-  //       }
-
-  //       if (!isEmpty(relationshipAttributes)) {
-  //         included.push({
-  //           ...getId(id, lid),
-  //           type: relationship.type,
-  //           attributes: relationshipAttributes
-  //         })
-  //       }
-
-  //       relationships[relationshipName] = finalRelationship
-  //     }
-
-  //     delete whitelistedAttributes[relationshipName]
-  //   })
-
-  //   if (!isEmpty(whitelistedAttributes)) result.data.attributes = whitelistedAttributes
-  //   if (!isEmpty(relationships)) result.data.relationships = relationships
-  //   if (!isEmpty(included)) result.included = included
-
-  //   return result
-  }
+  return subject => (
+    isPlainObject(subject)
+      ? serializeResource(type, subject, options, true)
+      : renderResource(type)
+  )
 }
