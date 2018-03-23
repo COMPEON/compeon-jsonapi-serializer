@@ -1,11 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`deserialize with an array of resources with valid attributes deserializes the json 1`] = `
+Array [
+  Object {
+    "firstName": "Nico",
+    "id": "123",
+    "lastName": "Peters",
+  },
+  Object {
+    "firstName": "Frank",
+    "id": "234",
+    "lastName": "Wüller",
+  },
+]
+`;
+
 exports[`deserialize with relationships with empty relationships ignores the relationship 1`] = `
 Object {
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
 }
+`;
+
+exports[`deserialize with relationships with relationships inside an array of resources deserializes the json 1`] = `
+Array [
+  Object {
+    "company": Object {
+      "city": "Düsseldorf",
+      "lid": "666",
+      "name": "Compeon GmbH",
+    },
+    "firstName": "Nico",
+    "id": "123",
+    "lastName": "Peters",
+  },
+  Object {
+    "company": Object {
+      "city": "Düsseldorf",
+      "lid": "666",
+      "name": "Compeon GmbH",
+    },
+    "firstName": "Frank",
+    "id": "234",
+    "lastName": "Wüller",
+    "tags": Array [
+      Object {
+        "id": "912",
+        "name": "Banking",
+      },
+      Object {
+        "id": "56",
+        "name": "CEO",
+      },
+    ],
+  },
+]
 `;
 
 exports[`deserialize with relationships with valid relationships with a 1:1 relationship with a local id deserializes the json 1`] = `

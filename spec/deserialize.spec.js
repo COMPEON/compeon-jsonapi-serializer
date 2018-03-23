@@ -40,6 +40,35 @@ describe('deserialize', () => {
     })
   })
 
+  describe('with an array of resources', () => {
+    describe('with valid attributes', () => {
+      const json = {
+        data: [
+          {
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            id: '123',
+            type: 'users'
+          },
+          {
+            attributes: {
+              firstName: 'Frank',
+              lastName: 'Wüller'
+            },
+            id: '234',
+            type: 'users'
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+  })
+
   describe('with relationships', () => {
     describe('with valid relationships', () => {
       describe('with a 1:1 relationship', () => {
@@ -326,6 +355,85 @@ describe('deserialize', () => {
             expect(deserialize()(json)).toMatchSnapshot()
           })
         })
+      })
+    })
+
+    describe('with relationships inside an array of resources', () => {
+      const json = {
+        data: [
+          {
+            id: '123',
+            type: 'users',
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            relationships: {
+              company: {
+                data: {
+                  lid: '666',
+                  type: 'companies'
+                }
+              }
+            }
+          },
+          {
+            id: '234',
+            type: 'users',
+            attributes: {
+              firstName: 'Frank',
+              lastName: 'Wüller'
+            },
+            relationships: {
+              company: {
+                data: {
+                  lid: '666',
+                  type: 'companies'
+                }
+              },
+              tags: {
+                data: [
+                  {
+                    id: '912',
+                    type: 'tags'
+                  },
+                  {
+                    id: '56',
+                    type: 'tags'
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        included: [
+          {
+            lid: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon GmbH',
+              city: 'Düsseldorf'
+            }
+          },
+          {
+            id: '912',
+            type: 'tags',
+            attributes: {
+              name: 'Banking'
+            }
+          },
+          {
+            id: '56',
+            type: 'tags',
+            attributes: {
+              name: 'CEO'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
       })
     })
 
