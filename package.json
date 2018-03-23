@@ -1,9 +1,11 @@
 {
   "name": "@compeon/jsonapi-serializer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client-side serialization for and deserialization of JSON API documents.",
   "main": "dist/compeon-jsonapi-serializer.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": "Gerrit Seger",
   "license": "MIT",
   "scripts": {
