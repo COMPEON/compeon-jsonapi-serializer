@@ -12,8 +12,6 @@ import {
   renderIdentifier
 } from './utils'
 
-const addInclude = (includes, include) => [...includes, include]
-
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
   const permittedAttributes = pick(resource, attributeNames)
@@ -50,10 +48,9 @@ const serializeRelationships = (relationships, options) => (
     if (!isPlainObject(relationshipOptions)) return result
     if (!relationshipOptions.type) throw `You did not specify a type for the relationship '${key}'`
 
-    if (Array.isArray(value)) {
-
-    }
-    const { data, included } = serializeResource(relationshipOptions.type, value, options[key])
+    const { data, included } = Array.isArray(value)
+      ? serializeResources(relationshipOptions.type, value, options[key])
+      : serializeResource(relationshipOptions.type, value, options[key])
 
     result.relationships[key] = { data }
     if (!isEmpty(included)) result.included = [...result.included, ...included]
@@ -79,6 +76,7 @@ const serializeResource = (type, resource, options, root = false) => {
   if (root) {
     return renderResource(type, identifier, attributes, serializedRelationships, included)
   } else {
+    if (!identifier.valid) return {}
     if (!isEmpty(attributes)) {
       const { data } = renderResource(type, identifier, attributes, relationships)
       included.push(data)
@@ -87,12 +85,28 @@ const serializeResource = (type, resource, options, root = false) => {
   }
 }
 
+const serializeResources = (type, resources, options, root = false) =>
+  reduce(resources, (result, value, key) => {
+    const { data, included } = serializeResource(type, value, options, root)
+
+    if (data === undefined) return result
+
+    result.data.push(data)
+
+    if (!isEmpty(included)) {
+      result.included = result.included || []
+      result.included = [...result.included, ...included]
+    }
+
+    return result
+  }, { data: [] })
+
 export const serialize = (type, options = {}) => {
   if (!type) throw 'You did not specify a type for the root resource.'
 
   return subject => {
     if (Array.isArray(subject)) {
-      return serializeRootResources(type, subject, options, true)
+      return serializeResources(type, subject, options, true)
     } else if (isPlainObject(subject)) {
       return serializeResource(type, subject, options, true)
     }
