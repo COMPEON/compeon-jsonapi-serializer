@@ -46,10 +46,10 @@ const serializeRelationships = (relationships, options) => (
     if (!relationshipOptions.type) throw `You did not specify a type for the relationship '${key}'`
 
     const { data, included } = Array.isArray(value)
-      ? serializeResources(relationshipOptions.type, value, options[key])
-      : serializeResource(relationshipOptions.type, value, options[key])
+      ? serializeResources(relationshipOptions.type, value, relationshipOptions)
+      : serializeResource(relationshipOptions.type, value, relationshipOptions)
 
-    result.relationships[key] = { data }
+    if (!isEmpty(data)) result.relationships[key] = { data }
     if (!isEmpty(included)) result.included = [...result.included, ...included]
 
     return result
@@ -75,10 +75,10 @@ const serializeResource = (type, resource, options, root = false) => {
   } else {
     if (!identifier.valid) return {}
     if (!isEmpty(attributes)) {
-      const { data } = renderResource(type, identifier, attributes, relationships)
+      const { data } = renderResource(type, identifier, attributes, serializedRelationships)
       included.push(data)
     }
-    return renderResource(type, identifier, null, relationships, included)
+    return renderResource(type, identifier, null, null, included)
   }
 }
 

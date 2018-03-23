@@ -40,7 +40,7 @@ Object {
   "company": Object {
     "city": "Düsseldorf",
     "id": "666",
-    "name": "Compeong GmbH",
+    "name": "Compeon GmbH",
   },
   "firstName": "Nico",
   "id": "123",
@@ -91,7 +91,7 @@ Object {
     Object {
       "city": "Düsseldorf",
       "id": "667",
-      "name": "Compeong 4.0 GmbH",
+      "name": "Compeon 4.0 GmbH",
     },
   ],
   "firstName": "Nico",
@@ -111,7 +111,7 @@ Object {
     Object {
       "city": "Düsseldorf",
       "id": "667",
-      "name": "Compeong 4.0 GmbH",
+      "name": "Compeon 4.0 GmbH",
     },
   ],
   "firstName": "Nico",

@@ -146,7 +146,7 @@ describe('serialize', () => {
           lastName: 'Peters',
           company: {
             id: '612',
-            name: 'Compeong GmbH'
+            name: 'Compeon GmbH'
           }
         }
         const options = {
@@ -173,7 +173,7 @@ describe('serialize', () => {
           lastName: 'Peters',
           company: {
             lid: '612',
-            name: 'Compeong GmbH'
+            name: 'Compeon GmbH'
           }
         }
         const options = {
@@ -208,7 +208,7 @@ describe('serialize', () => {
           },
           {
             id: '667',
-            name: 'Compeong 4.0 GmbH'
+            name: 'Compeon 4.0 GmbH'
           }
         ]
       }
@@ -240,7 +240,7 @@ describe('serialize', () => {
           },
           {
             id: '667',
-            name: 'Compeong 4.0 GmbH'
+            name: 'Compeon 4.0 GmbH'
           }
         ]
       }
@@ -269,7 +269,7 @@ describe('serialize', () => {
             name: 'Compeon GmbH'
           },
           {
-            name: 'Compeong 4.0 GmbH'
+            name: 'Compeon 4.0 GmbH'
           }
         ]
       }
@@ -303,7 +303,7 @@ describe('serialize', () => {
             },
             {
               id: '667',
-              name: 'Compeong 4.0 GmbH'
+              name: 'Compeon 4.0 GmbH'
             }
           ]
         }
@@ -336,7 +336,7 @@ describe('serialize', () => {
             },
             {
               id: '667',
-              name: 'Compeong 4.0 GmbH'
+              name: 'Compeon 4.0 GmbH'
             }
           ]
         }
@@ -354,6 +354,58 @@ describe('serialize', () => {
 
         it('serializes the data', () => {
           expect(serializeUser(data)).toMatchSnapshot()
+        })
+      })
+
+      describe('with deeply nested relationships', () => {
+        const data = {
+          firstName: 'Nico',
+          lastName: 'Peters',
+          company: {
+            id: '12',
+            name: 'Compeon GmbH',
+            tags: [
+              {
+                id: '66',
+                name: 'Tag 1',
+                version: {
+                  id: '95123',
+                  date: '19.03.2017'
+                }
+              },
+              {
+                lid: '777',
+                name: 'New sideposted tag'
+              }
+            ]
+          }
+        }
+        const options = {
+          attributes: ['company', 'firstName', 'lastName'],
+          relationships: {
+            company: {
+              attributes: ['name', 'tags'],
+              type: 'companies',
+              relationships: {
+                tags: {
+                  attributes: ['name', 'version'],
+                  type: 'tags',
+                  relationships: {
+                    version: {
+                      attributes: ['date'],
+                      type: 'versions'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        const userSerializer = serialize('users', options)
+
+        it('serializes the data', () => {
+          expect(userSerializer(data)).toMatchSnapshot()
         })
       })
     })

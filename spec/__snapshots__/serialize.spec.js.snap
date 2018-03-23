@@ -72,7 +72,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "name": "Compeong GmbH",
+        "name": "Compeon GmbH",
       },
       "lid": "612",
       "type": "companies",
@@ -102,7 +102,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "name": "Compeong GmbH",
+        "name": "Compeon GmbH",
       },
       "id": "612",
       "type": "companies",
@@ -227,7 +227,7 @@ Object {
     },
     Object {
       "attributes": Object {
-        "name": "Compeong 4.0 GmbH",
+        "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
       "type": "companies",
@@ -270,9 +270,81 @@ Object {
     },
     Object {
       "attributes": Object {
-        "name": "Compeong 4.0 GmbH",
+        "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with a 1:n relationship with includes with deeply nested relationships serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "id": "12",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "date": "19.03.2017",
+      },
+      "id": "95123",
+      "type": "versions",
+    },
+    Object {
+      "attributes": Object {
+        "name": "Tag 1",
+      },
+      "id": "66",
+      "relationships": Object {
+        "version": Object {
+          "data": Object {
+            "id": "95123",
+            "type": "versions",
+          },
+        },
+      },
+      "type": "tags",
+    },
+    Object {
+      "attributes": Object {
+        "name": "New sideposted tag",
+      },
+      "lid": "777",
+      "type": "tags",
+    },
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "id": "12",
+      "relationships": Object {
+        "tags": Object {
+          "data": Array [
+            Object {
+              "id": "66",
+              "type": "tags",
+            },
+            Object {
+              "lid": "777",
+              "type": "tags",
+            },
+          ],
+        },
+      },
       "type": "companies",
     },
   ],

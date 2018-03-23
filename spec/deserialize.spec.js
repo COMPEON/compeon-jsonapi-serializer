@@ -143,7 +143,7 @@ describe('deserialize', () => {
             id: '666',
             type: 'companies',
             attributes: {
-              name: 'Compeong GmbH',
+              name: 'Compeon GmbH',
               city: 'Düsseldorf'
             }
           }]
@@ -290,7 +290,7 @@ describe('deserialize', () => {
               id: '667',
               type: 'companies',
               attributes: {
-                name: 'Compeong 4.0 GmbH',
+                name: 'Compeon 4.0 GmbH',
                 city: 'Düsseldorf'
               }
             }
@@ -339,7 +339,7 @@ describe('deserialize', () => {
               id: '667',
               type: 'companies',
               attributes: {
-                name: 'Compeong 4.0 GmbH',
+                name: 'Compeon 4.0 GmbH',
                 city: 'Düsseldorf'
               }
             }
