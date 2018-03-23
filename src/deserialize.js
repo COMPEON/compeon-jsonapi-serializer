@@ -29,30 +29,34 @@ const deserializeRelationships = (relationships, included) => (
   }, {})
 )
 
-const deserializeResource = (resource, included) => {
+const deserializeResource = (resource, included, root = false) => {
   const identifier = extractIdentifier(resource)
   const { attributes, relationships, type } = resource
-  const include = get(findInclude(type, identifier, included), 'attributes')
+  const {
+    attributes: includedAttributes,
+    relationships: includedRelationships
+  } = findInclude(type, identifier, included) || {}
+  const renderedAttributes = root ? attributes : includedAttributes
 
   return {
     ...renderIdentifier(identifier),
-    ...include,
-    ...attributes,
-    ...deserializeRelationships(relationships, included)
+    ...renderedAttributes,
+    ...deserializeRelationships(relationships, included),
+    ...deserializeRelationships(includedRelationships, included)
   }
 }
 
-const deserializeResources = (resources, included) => (
-  map(resources, resource => deserializeResource(resource, included))
+const deserializeResources = (resources, included, root = false) => (
+  map(resources, resource => deserializeResource(resource, included, root))
 )
 
 export const deserialize = (options = {}) => subject => {
   const { data, included } = subject
 
   if (Array.isArray(data)) {
-    return deserializeResources(data, included)
+    return deserializeResources(data, included, true)
   } else if (isPlainObject(data)) {
-    return deserializeResource(data, included)
+    return deserializeResource(data, included, true)
   }
 
   return {}

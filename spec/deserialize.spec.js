@@ -351,84 +351,171 @@ describe('deserialize', () => {
         })
       })
     })
-  })
 
-  describe('with relationships inside an array of resources', () => {
-    const json = {
-      data: [
-        {
-          id: '123',
-          type: 'users',
+    describe('with relationships inside an array of resources', () => {
+      const json = {
+        data: [
+          {
+            id: '123',
+            type: 'users',
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            relationships: {
+              company: {
+                data: {
+                  lid: '666',
+                  type: 'companies'
+                }
+              }
+            }
+          },
+          {
+            id: '234',
+            type: 'users',
+            attributes: {
+              firstName: 'Frank',
+              lastName: 'Wüller'
+            },
+            relationships: {
+              company: {
+                data: {
+                  lid: '666',
+                  type: 'companies'
+                }
+              },
+              tags: {
+                data: [
+                  {
+                    id: '912',
+                    type: 'tags'
+                  },
+                  {
+                    id: '56',
+                    type: 'tags'
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        included: [
+          {
+            lid: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon GmbH',
+              city: 'Düsseldorf'
+            }
+          },
+          {
+            id: '912',
+            type: 'tags',
+            attributes: {
+              name: 'Banking'
+            }
+          },
+          {
+            id: '56',
+            type: 'tags',
+            attributes: {
+              name: 'CEO'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+
+    describe('with deeply nested relationships', () => {
+      const json = {
+        data: {
           attributes: {
             firstName: 'Nico',
             lastName: 'Peters'
           },
-          relationships: {
-            company: {
-              data: {
-                lid: '666',
-                type: 'companies'
-              }
-            }
-          }
-        },
-        {
-          id: '234',
+          id: '123',
           type: 'users',
-          attributes: {
-            firstName: 'Frank',
-            lastName: 'Wüller'
-          },
           relationships: {
             company: {
               data: {
-                lid: '666',
+                id: '666',
                 type: 'companies'
               }
-            },
-            tags: {
-              data: [
-                {
-                  id: '912',
-                  type: 'tags'
-                },
-                {
-                  id: '56',
-                  type: 'tags'
-                }
-              ]
             }
           }
-        }
-      ],
-      included: [
-        {
-          lid: '666',
-          type: 'companies',
-          attributes: {
-            name: 'Compeon GmbH',
-            city: 'Düsseldorf'
-          }
         },
-        {
-          id: '912',
-          type: 'tags',
-          attributes: {
-            name: 'Banking'
+        included: [
+          {
+            id: '666',
+            type: 'companies',
+            relationships: {
+              tags: {
+                data: [
+                  {
+                    id: '12',
+                    type: 'tags'
+                  },
+                  {
+                    id: '17',
+                    type: 'tags'
+                  }
+                ]
+              }
+            }
           }
-        },
-        {
-          id: '56',
-          type: 'tags',
-          attributes: {
-            name: 'CEO'
-          }
-        }
-      ]
-    }
+        ]
+      }
 
-    it('deserializes the json', () => {
-      expect(deserialize()(json)).toMatchSnapshot()
+      const faultyJson = {
+        data: {
+          attributes: {
+            name: 'Nico',
+            lastName: 'Peters'
+          },
+          type: 'users',
+          relationships: {
+            company: {
+              data: {
+                id: '666',
+                type: 'companies'
+              }
+            }
+          }
+        },
+        included: [
+          {
+            id: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon Gmbh'
+            },
+            relationships: {
+              tags: {
+                data: [{
+                  id: '12',
+                  type: 'tags',
+                  attributes: {
+                    faultyAttribute: 'do not deserialize this!'
+                  }
+                }]
+              }
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+
+      it('does not serialize attributes directly included in a relation', () => {
+        expect(deserialize()(faultyJson)).toMatchSnapshot()
+      })
     })
   })
 
