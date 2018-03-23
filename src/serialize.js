@@ -2,7 +2,8 @@ import {
   includes,
   isEmpty,
   isPlainObject,
-  pick
+  pick,
+  reduce
 } from 'lodash'
 
 import {
@@ -10,6 +11,8 @@ import {
   partition,
   renderIdentifier
 } from './utils'
+
+const addInclude = (includes, include) => [...includes, include]
 
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
@@ -30,16 +33,36 @@ const renderResourceAttribute = (key, attribute) => {
   return { [key]: attribute }
 }
 
-const renderResource = (type, identifier = {}, attributes, relationships) => ({
+const renderResource = (type, identifier = {}, attributes, relationships, included) => ({
   data: {
     ...renderIdentifier(identifier),
     ...renderResourceAttribute('attributes', attributes),
     ...renderResourceAttribute('relationships', relationships),
     type
-  }
+  },
+  ...renderResourceAttribute('included', included)
 })
 
-const serializeRootResource = (type, resource, options) => {
+const serializeRelationships = (relationships, options) => (
+  reduce(relationships, (result, value, key) => {
+    const relationshipOptions = options[key]
+
+    if (!isPlainObject(relationshipOptions)) return result
+    if (!relationshipOptions.type) throw `You did not specify a type for the relationship '${key}'`
+
+    if (Array.isArray(value)) {
+
+    }
+    const { data, included } = serializeResource(relationshipOptions.type, value, options[key])
+
+    result.relationships[key] = { data }
+    if (!isEmpty(included)) result.included = [...result.included, ...included]
+
+    return result
+  }, { relationships: {}, included: [] })
+)
+
+const serializeResource = (type, resource, options, root = false) => {
   const attributeOptions = options.attributes || []
   const relationshipOptions = options.relationships || {}
   const relationshipNames = Object.keys(relationshipOptions)
@@ -48,7 +71,20 @@ const serializeRootResource = (type, resource, options) => {
     identifier,
     relationships
   } = extractResourceInformation(resource, attributeOptions, relationshipNames)
-  return renderResource(type, identifier, attributes, relationships)
+  const {
+    included,
+    relationships: serializedRelationships
+  } = serializeRelationships(relationships, relationshipOptions)
+
+  if (root) {
+    return renderResource(type, identifier, attributes, serializedRelationships, included)
+  } else {
+    if (!isEmpty(attributes)) {
+      const { data } = renderResource(type, identifier, attributes, relationships)
+      included.push(data)
+    }
+    return renderResource(type, identifier, null, relationships, included)
+  }
 }
 
 export const serialize = (type, options = {}) => {
@@ -56,9 +92,9 @@ export const serialize = (type, options = {}) => {
 
   return subject => {
     if (Array.isArray(subject)) {
-      return serializeRootResources(type, subject, options)
+      return serializeRootResources(type, subject, options, true)
     } else if (isPlainObject(subject)) {
-      return serializeRootResource(type, subject, options)
+      return serializeResource(type, subject, options, true)
     }
 
     return renderResource(type)
