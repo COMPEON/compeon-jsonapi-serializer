@@ -1,6 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`serialize with relationships with includes with a 1:1 relationship with a local id serializes the data 1`] = `
+exports[`serialize with a 1:1 relationship when no relationship identifier is found ignores the relationship 1`] = `
+Object {
+  "data": Object {
+    "id": "123",
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:1 relationship with a local id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "lid": "666",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:1 relationship with a normal id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "id": "666",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:1 relationship with includes with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -30,7 +81,7 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with includes with a 1:1 relationship with a normal id serializes the data 1`] = `
+exports[`serialize with a 1:1 relationship with includes with a normal id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -60,7 +111,89 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with includes with a 1:n relationship with a local id serializes the data 1`] = `
+exports[`serialize with a 1:n relationship when no relationship identifier is found™ ignores the faulty relationship and serializes the valid one 1`] = `
+Object {
+  "data": Object {
+    "id": "123",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+  ],
+}
+`;
+
+exports[`serialize with a 1:n relationship with a local id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "lid": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:n relationship with a normal id serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "companies": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:n relationship with includes with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -103,7 +236,7 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with includes with a 1:n relationship with a normal id serializes the data 1`] = `
+exports[`serialize with a 1:n relationship with includes with a normal id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
@@ -146,135 +279,10 @@ Object {
 }
 `;
 
-exports[`serialize with relationships with invalid data when no relationship identifier is found with a 1:1 relationship ignores the relationship 1`] = `
+exports[`serialize with simple attributes with an array of resources serializes the data 1`] = `
 Object {
   "data": Object {
-    "id": "123",
-    "type": "users",
-  },
-}
-`;
-
-exports[`serialize with relationships with invalid data when no relationship identifier is found with a 1:n relationship ignores the faulty relationship and serializes the valid one 1`] = `
-Object {
-  "data": Object {
-    "id": "123",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
-            "id": "666",
-            "type": "companies",
-          },
-        ],
-      },
-    },
-    "type": "users",
-  },
-  "included": Array [
-    Object {
-      "attributes": Object {
-        "name": "Compeon GmbH",
-      },
-      "id": "666",
-      "type": "companies",
-    },
-  ],
-}
-`;
-
-exports[`serialize with relationships with valid data with a 1:1 relationship with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
-      "firstName": "Nico",
-      "lastName": "Peters",
-    },
-    "id": "511",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
-          "lid": "666",
-          "type": "companies",
-        },
-      },
-    },
-    "type": "users",
-  },
-}
-`;
-
-exports[`serialize with relationships with valid data with a 1:1 relationship with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
-      "firstName": "Nico",
-      "lastName": "Peters",
-    },
-    "id": "511",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
-          "id": "666",
-          "type": "companies",
-        },
-      },
-    },
-    "type": "users",
-  },
-}
-`;
-
-exports[`serialize with relationships with valid data with a 1:n relationship with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
-      "firstName": "Nico",
-      "lastName": "Peters",
-    },
-    "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
-            "lid": "666",
-            "type": "companies",
-          },
-          Object {
-            "id": "667",
-            "type": "companies",
-          },
-        ],
-      },
-    },
-    "type": "users",
-  },
-}
-`;
-
-exports[`serialize with relationships with valid data with a 1:n relationship with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
-      "firstName": "Nico",
-      "lastName": "Peters",
-    },
-    "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
-            "id": "666",
-            "type": "companies",
-          },
-          Object {
-            "id": "667",
-            "type": "companies",
-          },
-        ],
-      },
-    },
-    "type": "users",
+    "type": "user",
   },
 }
 `;
