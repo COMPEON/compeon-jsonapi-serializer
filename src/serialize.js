@@ -1,94 +1,147 @@
-import { each, get, isEmpty, pick } from 'lodash'
+import {
+  includes,
+  isEmpty,
+  isPlainObject,
+  pick
+} from 'lodash'
 
-const getId = (id, lid) => {
-  if (id) return { id: String(id) }
-  return { lid: String(lid) }
+import {
+  extractIdentifier,
+  partition,
+  renderIdentifier
+} from './utils'
+
+const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
+  const identifier = extractIdentifier(resource)
+  const permittedAttributes = pick(resource, attributeNames)
+  const [relationships, attributes] = partition(permittedAttributes, (_, key) => (
+    includes(relationshipNames, key)
+  ))
+
+  return {
+    attributes,
+    identifier,
+    relationships
+  }
+}
+
+const renderResourceAttribute = (key, attribute) => {
+  if (isEmpty(attribute)) return null
+  return { [key]: attribute }
+}
+
+const renderResource = (type, identifier = {}, attributes, relationships) => ({
+  data: {
+    ...renderIdentifier(identifier),
+    ...renderResourceAttribute('attributes', attributes),
+    ...renderResourceAttribute('relationships', relationships),
+    type
+  }
+})
+
+const serializeRootResource = (type, resource, options) => {
+  const attributeOptions = options.attributes || []
+  const relationshipOptions = options.relationships || {}
+  const relationshipNames = Object.keys(relationshipOptions)
+  const {
+    attributes,
+    identifier,
+    relationships
+  } = extractResourceInformation(resource, attributeOptions, relationshipNames)
+  return renderResource(type, identifier, attributes, relationships)
 }
 
 export const serialize = (type, options = {}) => {
   if (!type) throw 'You did not specify a type for the root resource.'
 
-  return object => {
-    const { id, ...attributes } = object
-    const whitelistedAttributes = pick(attributes, options.attributes)
-    const result = {
-      data: {
-        id,
-        type
-      }
+  return subject => {
+    if (Array.isArray(subject)) {
+      return serializeRootResources(type, subject, options)
+    } else if (isPlainObject(subject)) {
+      return serializeRootResource(type, subject, options)
     }
 
-    const included = []
-    const relationships = {}
+    return renderResource(type)
+  //   const { id, ...attributes } = object
+  //   const whitelistedAttributes = pick(attributes, options.attributes)
+  //   const result = {
+  //     data: {
+  //       id,
+  //       type
+  //     }
+  //   }
 
-    each(options.relationships, (relationship, relationshipName) => {
-      const relationshipData = whitelistedAttributes[relationshipName]
+  //   const included = []
+  //   const relationships = {}
 
-      if (Array.isArray(relationshipData)) {
-        const finalRelationships = []
+  //   each(options.relationships, (relationship, relationshipName) => {
+  //     const relationshipData = whitelistedAttributes[relationshipName]
 
-        each(relationshipData, (relationshipDataSet, index) => {
-          const id = get(relationshipDataSet, `id`)
-          const lid = get(relationshipDataSet, `lid`)
-          const relationshipAttributes = pick(relationshipDataSet, relationship.attributes)
+  //     if (Array.isArray(relationshipData)) {
+  //       const finalRelationships = []
 
-          if (id === undefined && lid === undefined) return
-          if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
+  //       each(relationshipData, (relationshipDataSet, index) => {
+  //         const id = get(relationshipDataSet, `id`)
+  //         const lid = get(relationshipDataSet, `lid`)
+  //         const relationshipAttributes = pick(relationshipDataSet, relationship.attributes)
 
-          const finalRelationship = {
-            ...getId(id, lid),
-            type: relationship.type
-          }
+  //         if (id === undefined && lid === undefined) return
+  //         if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
 
-          if (!isEmpty(relationshipAttributes)) {
-            included.push({
-              ...getId(id, lid),
-              type: relationship.type,
-              attributes: relationshipAttributes
-            })
-          }
+  //         const finalRelationship = {
+  //           ...getId(id, lid),
+  //           type: relationship.type
+  //         }
 
-          finalRelationships.push(finalRelationship)
-        })
+  //         if (!isEmpty(relationshipAttributes)) {
+  //           included.push({
+  //             ...getId(id, lid),
+  //             type: relationship.type,
+  //             attributes: relationshipAttributes
+  //           })
+  //         }
 
-        if (!isEmpty(finalRelationships)) {
-          relationships[relationshipName] = {
-            data: finalRelationships
-          }
-        }
-      } else {
-        const id = get(whitelistedAttributes, `${relationshipName}.id`)
-        const lid = get(whitelistedAttributes, `${relationshipName}.lid`)
-        const relationshipAttributes = pick(whitelistedAttributes[relationshipName], relationship.attributes)
+  //         finalRelationships.push(finalRelationship)
+  //       })
 
-        if (id === undefined && lid === undefined) return
-        if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
+  //       if (!isEmpty(finalRelationships)) {
+  //         relationships[relationshipName] = {
+  //           data: finalRelationships
+  //         }
+  //       }
+  //     } else {
+  //       const id = get(whitelistedAttributes, `${relationshipName}.id`)
+  //       const lid = get(whitelistedAttributes, `${relationshipName}.lid`)
+  //       const relationshipAttributes = pick(whitelistedAttributes[relationshipName], relationship.attributes)
 
-        const finalRelationship = {
-          data: {
-            ...getId(id, lid),
-            type: relationship.type
-          }
-        }
+  //       if (id === undefined && lid === undefined) return
+  //       if (!relationship.type) throw `You did not specify a type for the ${relationshipName} resource.`
 
-        if (!isEmpty(relationshipAttributes)) {
-          included.push({
-            ...getId(id, lid),
-            type: relationship.type,
-            attributes: relationshipAttributes
-          })
-        }
+  //       const finalRelationship = {
+  //         data: {
+  //           ...getId(id, lid),
+  //           type: relationship.type
+  //         }
+  //       }
 
-        relationships[relationshipName] = finalRelationship
-      }
+  //       if (!isEmpty(relationshipAttributes)) {
+  //         included.push({
+  //           ...getId(id, lid),
+  //           type: relationship.type,
+  //           attributes: relationshipAttributes
+  //         })
+  //       }
 
-      delete whitelistedAttributes[relationshipName]
-    })
+  //       relationships[relationshipName] = finalRelationship
+  //     }
 
-    if (!isEmpty(whitelistedAttributes)) result.data.attributes = whitelistedAttributes
-    if (!isEmpty(relationships)) result.data.relationships = relationships
-    if (!isEmpty(included)) result.included = included
+  //     delete whitelistedAttributes[relationshipName]
+  //   })
 
-    return result
+  //   if (!isEmpty(whitelistedAttributes)) result.data.attributes = whitelistedAttributes
+  //   if (!isEmpty(relationships)) result.data.relationships = relationships
+  //   if (!isEmpty(included)) result.included = included
+
+  //   return result
   }
 }
