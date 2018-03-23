@@ -1,109 +1,64 @@
-import { each, find, get, isPlainObject } from 'lodash'
+import {
+  find,
+  get,
+  isPlainObject,
+  map,
+  reduce
+} from 'lodash'
 
-const getId = (id, lid) => {
-  if (id) return { id: String(id) }
-  return { lid: String(lid) }
+import { extractIdentifier } from './utils'
+
+const renderIdentifier = (identifierName, identifierValue) => {
+  if (identifierName === undefined) return {}
+  return { [identifierName]: identifierValue }
 }
 
-export const deserialize = (options = {}) => object => {
-  const included = get(object, 'included', {})
-  const data = get(object, 'data')
+const findInclude = (type, identifierName, identifierValue, included) => (
+  find(included, {
+    [identifierName]: identifierValue,
+    type
+  })
+)
 
-  if (Array.isArray(data)) {
-    const results = []
+const deserializeRelationships = (relationships, included) => (
+  reduce(relationships, (result, value, key) => {
+    const data = get(value, 'data')
 
-    each(data, resource => {
-      const id = get(resource, 'id')
-      const result = get(resource, 'attributes', {})
-      const relationships = get(resource, 'relationships', {})
-
-      each(relationships, (relationship, relationshipName) => {
-        const data = get(relationship, 'data')
-
-        if (Array.isArray(data)) {
-          const finalRelationships = []
-          each(data, (relationshipDataSet, index) => {
-            const { id, lid, type } = relationshipDataSet
-
-            const include = find(included, {
-              ...getId(id, lid),
-              type
-            })
-
-            const dissolvedRelationship = include
-              ? { ...getId(id, lid), ...include.attributes }
-              : getId(id, lid)
-
-            finalRelationships.push(dissolvedRelationship)
-          })
-
-          result[relationshipName] = finalRelationships
-        } else if (isPlainObject(data)) {
-          const { id, lid, type } = data
-
-          const include = find(included, {
-            ...getId(id, lid),
-            type
-          })
-
-          const dissolvedRelationship = include
-            ? { ...getId(id, lid), ...include.attributes }
-            : getId(id, lid)
-
-          result[relationshipName] = dissolvedRelationship
-        }
-      })
-
-      if (id !== undefined) result.id = id
-
-      results.push(result)
-    })
-
-    return results
-  } else {
-    const id = get(data, 'id')
-    const result = get(data, 'attributes', {})
-    const relationships = get(data, 'relationships', {})
-
-    each(relationships, (relationship, relationshipName) => {
-      const data = get(relationship, 'data')
-
-      if (Array.isArray(data)) {
-        const finalRelationships = []
-        each(data, (relationshipDataSet, index) => {
-          const { id, lid, type } = relationshipDataSet
-
-          const include = find(included, {
-            ...getId(id, lid),
-            type
-          })
-
-          const dissolvedRelationship = include
-            ? { ...getId(id, lid), ...include.attributes }
-            : getId(id, lid)
-
-          finalRelationships.push(dissolvedRelationship)
-        })
-
-        result[relationshipName] = finalRelationships
-      } else if (isPlainObject(data)) {
-        const { id, lid, type } = data
-
-        const include = find(included, {
-          ...getId(id, lid),
-          type
-        })
-
-        const dissolvedRelationship = include
-          ? { ...getId(id, lid), ...include.attributes }
-          : getId(id, lid)
-
-        result[relationshipName] = dissolvedRelationship
-      }
-    })
-
-    if (id !== undefined) result.id = id
+    if (Array.isArray(data)) {
+      result[key] = deserializeResources(data, included)
+    } else if (isPlainObject(data)) {
+      result[key] = deserializeResource(data, included)
+    }
 
     return result
+  }, {})
+)
+
+const deserializeResource = (resource, included) => {
+  const { identifierName, identifierValue } = extractIdentifier(resource)
+  const { attributes, relationships, type } = resource
+  const include = get(findInclude(type, identifierName, identifierValue, included), 'attributes')
+
+  return {
+    ...renderIdentifier(identifierName, identifierValue),
+    ...include,
+    ...attributes,
+    ...deserializeRelationships(relationships, included)
   }
+}
+
+const deserializeResources = (resources, included) => (
+  map(resources, resource => deserializeResource(resource, included))
+)
+
+export const deserialize = (options = {}) => subject => {
+  const { data, included } = subject
+
+  if (Array.isArray(data)) {
+    return deserializeResources(data, included)
+  } else if (isPlainObject(data)) {
+    return deserializeResource(data, included)
+  }
+
+  return {}
 }
