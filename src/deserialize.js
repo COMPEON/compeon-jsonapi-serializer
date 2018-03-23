@@ -6,16 +6,14 @@ import {
   reduce
 } from 'lodash'
 
-import { extractIdentifier } from './utils'
+import {
+  extractIdentifier,
+  renderIdentifier
+} from './utils'
 
-const renderIdentifier = (identifierName, identifierValue) => {
-  if (identifierName === undefined) return {}
-  return { [identifierName]: identifierValue }
-}
-
-const findInclude = (type, identifierName, identifierValue, included) => (
+const findInclude = (type, identifier, included) => (
   find(included, {
-    [identifierName]: identifierValue,
+    ...renderIdentifier(identifier),
     type
   })
 )
@@ -35,12 +33,12 @@ const deserializeRelationships = (relationships, included) => (
 )
 
 const deserializeResource = (resource, included) => {
-  const { identifierName, identifierValue } = extractIdentifier(resource)
+  const identifier = extractIdentifier(resource)
   const { attributes, relationships, type } = resource
-  const include = get(findInclude(type, identifierName, identifierValue, included), 'attributes')
+  const include = get(findInclude(type, identifier, included), 'attributes')
 
   return {
-    ...renderIdentifier(identifierName, identifierValue),
+    ...renderIdentifier(identifier),
     ...include,
     ...attributes,
     ...deserializeRelationships(relationships, included)

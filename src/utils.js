@@ -3,14 +3,23 @@ export const isPresent = value => (
 )
 
 export const extractIdentifier = resource => {
-  const identifierName = isPresent(resource.id)
+  const name = isPresent(resource.id)
     ? 'id'
     : isPresent(resource.lid)
       ? 'lid'
       : undefined
-  const identifierValue = isPresent(resource[identifierName])
-    ? String(resource[identifierName])
+  const value = isPresent(resource[name])
+    ? String(resource[name])
     : undefined
 
-  return { identifierName, identifierValue }
+  return {
+    name,
+    valid: name !== undefined && value !== undefined,
+    value
+  }
+}
+
+export const renderIdentifier = ({ name, value, valid }) => {
+  if (!valid) return {}
+  return { [name]: value }
 }
