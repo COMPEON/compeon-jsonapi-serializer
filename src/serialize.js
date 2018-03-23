@@ -7,7 +7,7 @@ import {
 } from 'lodash'
 
 import { extractIdentifier, renderIdentifier } from './common'
-import { partition } from './utils'
+import { mergeArrays, partition } from './utils'
 
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
@@ -50,7 +50,7 @@ const serializeRelationships = (relationships, options) => (
       : serializeResource(relationshipOptions.type, value, relationshipOptions)
 
     if (!isEmpty(data)) result.relationships[key] = { data }
-    if (!isEmpty(included)) result.included = [...result.included, ...included]
+    if (!isEmpty(included)) result.included = mergeArrays(result.included, included)
 
     return result
   }, { relationships: {}, included: [] })
@@ -70,29 +70,25 @@ const serializeResource = (type, resource, options, root = false) => {
     relationships: serializedRelationships
   } = serializeRelationships(relationships, relationshipOptions)
 
-  if (root) {
-    return renderResource(type, identifier, attributes, serializedRelationships, included)
-  } else {
-    if (!identifier.valid) return {}
-    if (!isEmpty(attributes)) {
-      const { data } = renderResource(type, identifier, attributes, serializedRelationships)
-      included.push(data)
-    }
-    return renderResource(type, identifier, null, null, included)
+  if (root) return renderResource(type, identifier, attributes, serializedRelationships, included)
+  if (!identifier.valid) return {}
+  if (!isEmpty(attributes)) {
+    const resource = renderResource(type, identifier, attributes, serializedRelationships)
+    included.push(resource.data)
   }
+
+  return renderResource(type, identifier, null, null, included)
 }
 
 const serializeResources = (type, resources, options) =>
   reduce(resources, (result, value, key) => {
     const { data, included } = serializeResource(type, value, options)
 
-    if (data === undefined) return result
-
-    result.data.push(data)
-
-    if (!isEmpty(included)) {
-      result.included = result.included || []
-      result.included = [...result.included, ...included]
+    if (data) {
+      result.data.push(data)
+      result.included = isEmpty(included)
+        ? result.included
+        : mergeArrays(result.included, included)
     }
 
     return result
