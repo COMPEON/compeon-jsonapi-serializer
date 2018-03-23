@@ -1,6 +1,6 @@
 {
   "name": "@compeon/jsonapi-serializer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Client-side serialization for and deserialization of JSON API documents.",
   "main": "dist/compeon-jsonapi-serializer.js",
   "files": [
