@@ -6,7 +6,10 @@
   "files": [
     "dist"
   ],
-  "author": "Gerrit Seger",
+  "authors": [
+    "Bastian Ahrens <bahrens@compeon.de>",
+    "Gerrit Seger <gseger@compeon.de>"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production --config webpack.config.js",
