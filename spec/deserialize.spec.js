@@ -473,6 +473,7 @@ describe('deserialize', () => {
 
       const faultyJson = {
         data: {
+          id: '823',
           attributes: {
             name: 'Nico',
             lastName: 'Peters'
@@ -513,7 +514,7 @@ describe('deserialize', () => {
         expect(deserialize()(json)).toMatchSnapshot()
       })
 
-      it('does not serialize attributes directly included in a relation', () => {
+      it('does not deserialize attributes directly included in a relation', () => {
         expect(deserialize()(faultyJson)).toMatchSnapshot()
       })
     })
@@ -534,6 +535,38 @@ describe('deserialize', () => {
           }
         }
       }
+    }
+
+    it('ignores the relationship', () => {
+      expect(deserialize()(json)).toMatchSnapshot()
+    })
+  })
+
+  describe('with relationships that have no identifier', () => {
+    const json = {
+      data: {
+        attributes: {
+          firstName: 'Nico',
+          lastName: 'Peters'
+        },
+        id: '123',
+        type: 'users',
+        relationships: {
+          company: {
+            data: {
+              type: 'companies'
+            }
+          }
+        }
+      },
+      included: [
+        {
+          type: 'companies',
+          attributes: {
+            name: 'Compeon'
+          }
+        }
+      ]
     }
 
     it('ignores the relationship', () => {

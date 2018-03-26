@@ -99,7 +99,7 @@ Object {
 }
 `;
 
-exports[`deserialize with a 1:n relationship with deeply nested relationships does not serialize attributes directly included in a relation 1`] = `
+exports[`deserialize with a 1:n relationship with deeply nested relationships does not deserialize attributes directly included in a relation 1`] = `
 Object {
   "company": Object {
     "id": "666",
@@ -110,6 +110,7 @@ Object {
       },
     ],
   },
+  "id": "823",
   "lastName": "Peters",
   "name": "Nico",
 }
@@ -206,6 +207,14 @@ Array [
 `;
 
 exports[`deserialize with empty relationships ignores the relationship 1`] = `
+Object {
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with relationships that have no identifier ignores the relationship 1`] = `
 Object {
   "firstName": "Nico",
   "id": "123",

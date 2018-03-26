@@ -1,6 +1,7 @@
 import {
   find,
   get,
+  isEmpty,
   isPlainObject,
   map,
   reduce
@@ -18,12 +19,15 @@ const findInclude = (type, identifier, included) => (
 const deserializeRelationships = (relationships, included) => (
   reduce(relationships, (result, value, key) => {
     const data = get(value, 'data')
+    let deserializedResource
 
     if (Array.isArray(data)) {
-      result[key] = deserializeResources(data, included)
+      deserializedResource = deserializeResources(data, included)
     } else if (isPlainObject(data)) {
-      result[key] = deserializeResource(data, included)
+      deserializedResource = deserializeResource(data, included)
     }
+
+    if (!isEmpty(deserializedResource)) result[key] = deserializedResource
 
     return result
   }, {})
@@ -37,6 +41,12 @@ const deserializeResource = (resource, included, root = false) => {
     relationships: includedRelationships
   } = findInclude(type, identifier, included) || {}
   const renderedAttributes = root ? attributes : includedAttributes
+
+  // Resources without a valid identifier are not specified.
+  // TODO: Actually, an empty object should be rendered even for the root
+  // object. This is not possible yet due to some endpoints that do not return
+  // an identifier (e.g. email and company-suggestions).
+  if (!root && !identifier.valid) return {}
 
   return {
     ...renderIdentifier(identifier),
