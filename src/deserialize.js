@@ -16,15 +16,21 @@ const findInclude = (type, identifier, included) => (
   })
 )
 
+const renderLinks = links => {
+  if (!links) return null
+  return { links }
+}
+
 const deserializeRelationships = (relationships, included) => (
   reduce(relationships, (result, value, key) => {
     const data = get(value, 'data')
+    const links = get(value, 'links')
     let deserializedResource
 
     if (Array.isArray(data)) {
-      deserializedResource = deserializeResources(data, included)
+      deserializedResource = deserializeResources(data, included, links)
     } else if (isPlainObject(data)) {
-      deserializedResource = deserializeResource(data, included)
+      deserializedResource = deserializeResource(data, included, links)
     }
 
     if (!isEmpty(deserializedResource)) result[key] = deserializedResource
@@ -33,7 +39,7 @@ const deserializeRelationships = (relationships, included) => (
   }, {})
 )
 
-const deserializeResource = (resource, included, root = false) => {
+const deserializeResource = (resource, included, links, root = false) => {
   const identifier = extractIdentifier(resource)
   const { attributes, relationships, type } = resource
   const {
@@ -52,21 +58,22 @@ const deserializeResource = (resource, included, root = false) => {
     ...renderIdentifier(identifier),
     ...renderedAttributes,
     ...deserializeRelationships(relationships, included),
-    ...deserializeRelationships(includedRelationships, included)
+    ...deserializeRelationships(includedRelationships, included),
+    ...renderLinks(links)
   }
 }
 
-const deserializeResources = (resources, included, root = false) => (
-  map(resources, resource => deserializeResource(resource, included, root))
+const deserializeResources = (resources, included, links, root = false) => (
+  map(resources, resource => deserializeResource(resource, included, links, root))
 )
 
 export const deserialize = (options = {}) => subject => {
-  const { data, included } = subject
+  const { data, included, links } = subject
 
   if (Array.isArray(data)) {
-    return deserializeResources(data, included, true)
+    return deserializeResources(data, included, links, true)
   } else if (isPlainObject(data)) {
-    return deserializeResource(data, included, true)
+    return deserializeResource(data, included, links, true)
   }
 
   return {}

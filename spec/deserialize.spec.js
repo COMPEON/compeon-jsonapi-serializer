@@ -573,4 +573,31 @@ describe('deserialize', () => {
       expect(deserialize()(json)).toMatchSnapshot()
     })
   })
+
+  describe('with links', () => {
+    describe('when on the root level', () => {
+      const json = {
+        data: {
+          id: '123',
+          type: 'users',
+          attributes: {
+            firstName: 'Nico',
+            lastName: 'Peters'
+          }
+        },
+        links: {
+          dashboard: {
+            url: 'http://example.com',
+            meta: {
+              title: 'Dashboard'
+            }
+          }
+        }
+      }
+
+      it('deserializes the links', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+  })
 })

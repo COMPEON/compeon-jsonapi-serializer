@@ -214,6 +214,22 @@ Object {
 }
 `;
 
+exports[`deserialize with links when on the root level deserializes the links 1`] = `
+Object {
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+  "links": Object {
+    "dashboard": Object {
+      "meta": Object {
+        "title": "Dashboard",
+      },
+      "url": "http://example.com",
+    },
+  },
+}
+`;
+
 exports[`deserialize with relationships that have no identifier ignores the relationship 1`] = `
 Object {
   "firstName": "Nico",
