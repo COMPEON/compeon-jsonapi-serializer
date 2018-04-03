@@ -55,11 +55,12 @@ const json = organismSerializer(data)
 
 ```
 
-Will serialize to
+will serialize to
 
 ```javascript
 {
   data: {
+    type: 'organisms',
     attributes: {
       firstName: 'Arthur',
       lastName: 'Dent'
@@ -73,18 +74,17 @@ Will serialize to
           type: 'planets'
         }
       }
-    },
-    type: 'organisms'
+    }
   },
   included: [
     {
       id: '6126',
       // or
       lid: '79862106-6aac-4a66-9553-d1453fc267de',
+      type: 'planets',
       attributes: {
         name: 'Earth'
-      },
-      type: 'planets'
+      }
     }
   ]
 }
@@ -98,12 +98,90 @@ deserialize(options)(json)
 
 **Options**: There are no options available for this factory function yet.
 
+
+#### Example
+
+```javascript
+import { deserialize } from '@compeon/jsonapi-serializer'
+
+
+const json = {
+  data: {
+    id: '123',
+    type: 'organisms',
+    attributes: {
+      firstName: 'Arthur',
+      lastName: 'Dent'
+    },
+    relationships: {
+      planet: {
+        data: {
+          id: '6126',
+          // or
+          lid: '79862106-6aac-4a66-9553-d1453fc267de',
+          type: 'planets'
+        }
+      }
+    }
+  },
+  included: [
+    {
+      id: '6126',
+      // or
+      lid: '79862106-6aac-4a66-9553-d1453fc267de',
+      type: 'planets',
+      attributes: {
+        name: 'Earth'
+      }
+    }
+  ],
+  links: {
+    dashboard: {
+      url: 'http://example.com',
+      meta: {
+        title: 'Dashboard'
+      }
+    }
+  }
+}
+
+const data = deserialize()(json)
+
+```
+
+will deserialize to
+
+```javascript
+{
+  firstName: 'Arthur',
+  id: '123',
+  lastName: 'Dent',
+  links: {
+    dashboard: {
+      url: 'http://example.com',
+      meta: {
+        title: 'Dashboard'
+      }
+    },
+  },
+  planet: {
+    id: '6126',
+    // or
+    lid: '79862106-6aac-4a66-9553-d1453fc267de',
+    name: 'Earth'
+  }
+}
+```
+
+Please note that right now **only root level links are deserialized**. Support for resource level links is planned for a future release. 
+
 ## Todo
 
 - [ ] Detect duplicate includes on serialization
 - [ ] Detect cyclic relationships on deserialization
 - [ ] Support full JSON API 1.0
 - [ ] Add a suiting license
+- [ ] Develop a concept for deserializing resource level links as well
 
 ## License
 TODO
