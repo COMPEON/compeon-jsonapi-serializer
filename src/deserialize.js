@@ -48,10 +48,9 @@ const deserializeResource = (resource, included, links, root = false) => {
   } = findInclude(type, identifier, included) || {}
   const renderedAttributes = root ? attributes : includedAttributes
 
-  // Resources without a valid identifier are not specified.
-  // TODO: Actually, an empty object should be rendered even for the root
-  // object. This is not possible yet due to some endpoints that do not return
-  // an identifier (e.g. email and company-suggestions).
+  // Resources without a valid identifier are actually not specified, but
+  // otherwise responses that are no resource and thus do not have a valid
+  // identifier could not be deserialized.
   if (!root && !identifier.valid) return {}
 
   return {
