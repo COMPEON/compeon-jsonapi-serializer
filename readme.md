@@ -173,15 +173,15 @@ will deserialize to
 }
 ```
 
-Please note that right now **only root level links are deserialized**. Support for resource level links is planned for a future release. 
+Please note that right now **only root level links are deserialized**. Support for resource level links is planned for a future release.
 
 ## Todo
 
 - [ ] Detect duplicate includes on serialization
 - [ ] Detect cyclic relationships on deserialization
 - [ ] Support full JSON API 1.0
-- [ ] Add a suiting license
 - [ ] Develop a concept for deserializing resource level links as well
 
 ## License
-TODO
+
+MIT
