@@ -351,6 +351,60 @@ Object {
 }
 `;
 
+exports[`serialize with a 1:n relationship with includes with duplicate includes serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "company": Object {
+        "data": Object {
+          "id": "666",
+          "type": "companies",
+        },
+      },
+      "employees": Object {
+        "data": Array [
+          Object {
+            "id": "152",
+            "type": "users",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "firstName": "Arno",
+        "lastName": "Apitester",
+      },
+      "id": "152",
+      "relationships": Object {
+        "company": Object {
+          "data": Object {
+            "id": "666",
+            "type": "companies",
+          },
+        },
+      },
+      "type": "users",
+    },
+  ],
+}
+`;
+
 exports[`serialize with simple attributes with an array of resources serializes the data 1`] = `
 Object {
   "data": Object {
