@@ -1,13 +1,33 @@
 import {
+  get,
   includes,
   isEmpty,
   isPlainObject,
   pick,
-  reduce
+  reduce,
+  set
 } from 'lodash'
 
 import { extractIdentifier, renderIdentifier } from './common'
 import { mergeArrays, partition } from './utils'
+
+const removeDuplicateIncludes = included => {
+  const includeDictionary = {}
+
+  return reduce(included, (result, include) => {
+    const { name, value } = extractIdentifier(include)
+    const { type } = include
+    const identifierKey = [name, value].join('')
+    const path = `${type}.${identifierKey}`
+
+    if (!get(includeDictionary, path)) {
+      result.push(include)
+      set(includeDictionary, path, true)
+    }
+
+    return result
+  }, [])
+}
 
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
@@ -70,7 +90,15 @@ const serializeResource = (type, resource, options, root = false) => {
     relationships: serializedRelationships
   } = serializeRelationships(relationships, relationshipOptions)
 
-  if (root) return renderResource(type, identifier, attributes, serializedRelationships, included)
+  if (root) {
+    return renderResource(
+      type,
+      identifier,
+      attributes,
+      serializedRelationships,
+      removeDuplicateIncludes(included)
+    )
+  }
   if (!identifier.valid) return {}
   if (!isEmpty(attributes)) {
     const resource = renderResource(type, identifier, attributes, serializedRelationships)
