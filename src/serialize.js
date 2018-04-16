@@ -1,11 +1,9 @@
 import {
-  get,
   includes,
   isEmpty,
   isPlainObject,
   pick,
-  reduce,
-  set
+  reduce
 } from 'lodash'
 
 import { extractIdentifier, renderIdentifier } from './common'
@@ -16,13 +14,11 @@ const removeDuplicateIncludes = included => {
 
   return reduce(included, (result, include) => {
     const { name, value } = extractIdentifier(include)
-    const { type } = include
-    const identifierKey = [name, value].join('')
-    const path = `${type}.${identifierKey}`
+    const path = [include.type, name, value].join('/')
 
-    if (!get(includeDictionary, path)) {
+    if (!includeDictionary[path]) {
       result.push(include)
-      set(includeDictionary, path, true)
+      includeDictionary[path] = true
     }
 
     return result
