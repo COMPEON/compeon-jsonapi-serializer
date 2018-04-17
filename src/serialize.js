@@ -9,6 +9,22 @@ import {
 import { extractIdentifier, renderIdentifier } from './common'
 import { mergeArrays, partition } from './utils'
 
+const removeDuplicateIncludes = included => {
+  const includeDictionary = {}
+
+  return reduce(included, (result, include) => {
+    const { name, value } = extractIdentifier(include)
+    const path = [include.type, name, value].join('/')
+
+    if (!includeDictionary[path]) {
+      result.push(include)
+      includeDictionary[path] = true
+    }
+
+    return result
+  }, [])
+}
+
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
   const permittedAttributes = pick(resource, attributeNames)
@@ -70,7 +86,15 @@ const serializeResource = (type, resource, options, root = false) => {
     relationships: serializedRelationships
   } = serializeRelationships(relationships, relationshipOptions)
 
-  if (root) return renderResource(type, identifier, attributes, serializedRelationships, included)
+  if (root) {
+    return renderResource(
+      type,
+      identifier,
+      attributes,
+      serializedRelationships,
+      removeDuplicateIncludes(included)
+    )
+  }
   if (!identifier.valid) return {}
   if (!isEmpty(attributes)) {
     const resource = renderResource(type, identifier, attributes, serializedRelationships)

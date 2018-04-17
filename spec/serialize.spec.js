@@ -408,6 +408,54 @@ describe('serialize', () => {
           expect(userSerializer(data)).toMatchSnapshot()
         })
       })
+
+      describe('with duplicate includes', () => {
+        const data = {
+          id: '511',
+          firstName: 'Nico',
+          lastName: 'Peters',
+          company: {
+            id: '666',
+            name: 'Compeon GmbH'
+          },
+          employees: [
+            {
+              id: '152',
+              firstName: 'Arno',
+              lastName: 'Apitester',
+              company: {
+                id: '666',
+                name: 'Compeon GmbH'
+              }
+            }
+          ]
+        }
+        const options = {
+          attributes: ['company', 'employees', 'firstName', 'lastName'],
+          relationships: {
+            company: {
+              attributes: ['name'],
+              type: 'companies'
+            },
+            employees: {
+              attributes: ['company', 'firstName', 'lastName'],
+              type: 'users',
+              relationships: {
+                company: {
+                  attributes: ['name'],
+                  type: 'companies'
+                }
+              }
+            }
+          }
+        }
+
+        const userSerializer = serialize('users', options)
+
+        it('serializes the data', () => {
+          expect(userSerializer(data)).toMatchSnapshot()
+        })
+      })
     })
   })
 
@@ -434,5 +482,4 @@ describe('serialize', () => {
       })
     })
   })
-
 })
