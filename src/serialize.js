@@ -121,6 +121,6 @@ export const serialize = (type, options = {}) => {
   return subject => {
     if (isPlainObject(subject)) return serializeResource(type, subject, options, true)
     if (Array.isArray(subject)) return serializeResources(type, subject, omit(options, 'attributes'))
-    return serialize(type)
+    return renderResource(type)
   }
 }
