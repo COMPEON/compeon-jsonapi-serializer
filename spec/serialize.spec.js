@@ -20,6 +20,16 @@ describe('serialize', () => {
       })
     })
 
+    describe('with a primitive data type', () => {
+      const data = 'string'
+
+      const serializer = serialize('users')
+
+      it('serializes an empty resource', () => {
+        expect(serializer(data)).toMatchSnapshot()
+      })
+    })
+
     describe('with empty attributes', () => {
       const data = {
         id: '125',
