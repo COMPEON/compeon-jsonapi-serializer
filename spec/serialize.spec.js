@@ -20,6 +20,16 @@ describe('serialize', () => {
       })
     })
 
+    describe('with a primitive data type', () => {
+      const data = 'string'
+
+      const serializer = serialize('users')
+
+      it('serializes an empty resource', () => {
+        expect(serializer(data)).toMatchSnapshot()
+      })
+    })
+
     describe('with empty attributes', () => {
       const data = {
         id: '125',
@@ -39,14 +49,35 @@ describe('serialize', () => {
       })
     })
 
-    // A root level resource MUST be a single object.
-    describe('with an array of resources', () => {
+    describe('with an array of resources and no attributes', () => {
       const data = [
         {
+          id: '123'
+        },
+        {
+          id: '134'
+        }
+      ]
+
+      const userSerializer = serialize('user')
+
+      it('serializes the data', () => {
+        expect(userSerializer(data)).toMatchSnapshot()
+      })
+    })
+
+    // An array is not allowed as a root level resource, but it can be used to
+    // update relationships. In this case attributes will be ignored.
+    // http://jsonapi.org/format/#crud-updating-relationships
+    describe('with an array of resources and attributes', () => {
+      const data = [
+        {
+          id: '123',
           firstName: 'Nico',
           lastName: 'Peters'
         },
         {
+          id: '134',
           firstName: 'Frank',
           lastName: 'Wüller'
         }
@@ -57,7 +88,7 @@ describe('serialize', () => {
 
       const userSerializer = serialize('user', options)
 
-      it('serializes the data', () => {
+      it('ignores the attributes and only serializes id and type', () => {
         expect(userSerializer(data)).toMatchSnapshot()
       })
     })

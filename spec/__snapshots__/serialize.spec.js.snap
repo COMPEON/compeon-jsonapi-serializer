@@ -405,11 +405,41 @@ Object {
 }
 `;
 
-exports[`serialize with simple attributes with an array of resources serializes the data 1`] = `
+exports[`serialize with simple attributes with a primitive data type serializes an empty resource 1`] = `
 Object {
   "data": Object {
-    "type": "user",
+    "type": "users",
   },
+}
+`;
+
+exports[`serialize with simple attributes with an array of resources and attributes ignores the attributes and only serializes id and type 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "id": "123",
+      "type": "user",
+    },
+    Object {
+      "id": "134",
+      "type": "user",
+    },
+  ],
+}
+`;
+
+exports[`serialize with simple attributes with an array of resources and no attributes serializes the data 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "id": "123",
+      "type": "user",
+    },
+    Object {
+      "id": "134",
+      "type": "user",
+    },
+  ],
 }
 `;
 
