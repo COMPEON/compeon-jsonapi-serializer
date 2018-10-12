@@ -16,11 +16,6 @@ const findInclude = (type, identifier, included) => (
   })
 )
 
-const renderLinks = links => {
-  if (!links) return null
-  return { links }
-}
-
 const deserializeRelationships = (relationships, included) => (
   reduce(relationships, (result, value, key) => {
     const data = get(value, 'data')
@@ -53,13 +48,16 @@ const deserializeResource = (resource, included, links, root = false) => {
   // identifier could not be deserialized.
   if (!root && !identifier.valid) return {}
 
-  return {
+  const deserializedResource = {
     ...renderIdentifier(identifier),
     ...renderedAttributes,
     ...deserializeRelationships(relationships, included),
-    ...deserializeRelationships(includedRelationships, included),
-    ...renderLinks(links)
+    ...deserializeRelationships(includedRelationships, included)
   }
+
+  if (links) deserializedResource.links = links
+
+  return deserializedResource
 }
 
 const deserializeResources = (resources, included, links, root = false) => (
