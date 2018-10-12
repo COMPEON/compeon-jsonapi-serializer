@@ -179,7 +179,6 @@ Please note that right now **only root level links are deserialized**. Support f
 
 - [ ] Detect cyclic relationships on deserialization
 - [ ] Support full JSON API 1.0
-- [ ] Develop a concept for deserializing resource level links as well
 
 ## License
 
