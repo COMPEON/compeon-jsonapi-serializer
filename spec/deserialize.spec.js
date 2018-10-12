@@ -576,6 +576,70 @@ describe('deserialize', () => {
 
   describe('with links', () => {
     describe('when on the root level', () => {
+      describe('with a single resource', () => {
+        const json = {
+          data: {
+            id: '123',
+            type: 'users',
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            }
+          },
+          links: {
+            dashboard: {
+              url: 'http://example.com',
+              meta: {
+                title: 'Dashboard'
+              }
+            }
+          }
+        }
+
+        it('deserializes the links', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+
+      describe('with a resource array', () => {
+        const json = {
+          data: [
+            {
+              id: '123',
+              type: 'users',
+              attributes: {
+                firstName: 'Nico',
+                lastName: 'Peters'
+              }
+            },
+            {
+              id: '124',
+              type: 'users',
+              attributes: {
+                firstName: 'Karl',
+                lastName: 'Maschmann'
+              }
+            }
+          ],
+          links: {
+            dashboard: {
+              url: 'http://example.com',
+              meta: {
+                title: 'Dashboard'
+              }
+            }
+          }
+        }
+
+        it('deserializes the links', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+    })
+  })
+
+  describe('when on the resource level', () => {
+    describe('with a single resource', () => {
       const json = {
         data: {
           id: '123',
@@ -583,8 +647,107 @@ describe('deserialize', () => {
           attributes: {
             firstName: 'Nico',
             lastName: 'Peters'
+          },
+          links: {
+            self: 'http://some-url.com/123'
+          }
+        }
+      }
+
+      it('deserializes the links', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a resource array', () => {
+      const json = {
+        data: [
+          {
+            id: '123',
+            type: 'users',
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            links: {
+              self: 'http://some-url.com/123'
+            }
+          },
+          {
+            id: '124',
+            type: 'users',
+            attributes: {
+              firstName: 'Karl',
+              lastName: 'Maschmann'
+            },
+            links: {
+              self: 'http://some-url.com/124'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the links', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+  })
+
+  describe('with root and resource level links', () => {
+    describe('with a single resource', () => {
+      const json = {
+        data: {
+          id: '123',
+          type: 'users',
+          attributes: {
+            firstName: 'Nico',
+            lastName: 'Peters'
+          },
+          links: {
+            self: 'http://some-url.com/123'
           }
         },
+        links: {
+          dashboard: {
+            url: 'http://example.com',
+            meta: {
+              title: 'Dashboard'
+            }
+          }
+        }
+      }
+
+      it('deserializes the links', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a resource array', () => {
+      const json = {
+        data: [
+          {
+            id: '123',
+            type: 'users',
+            attributes: {
+              firstName: 'Nico',
+              lastName: 'Peters'
+            },
+            links: {
+              self: 'http://some-url.com/123'
+            }
+          },
+          {
+            id: '124',
+            type: 'users',
+            attributes: {
+              firstName: 'Karl',
+              lastName: 'Maschmann'
+            },
+            links: {
+              self: 'http://some-url.com/124'
+            }
+          }
+        ],
         links: {
           dashboard: {
             url: 'http://example.com',
