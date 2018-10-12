@@ -14,6 +14,9 @@ module.exports = {
       }
     ]
   },
+  optimization: {
+    minimize: false
+  },
   output: {
     filename: 'compeon-jsonapi-serializer.js',
     library: 'compeon-jsonapi-serializer',
