@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`deserialize when on the resource level with a resource array deserializes the links 1`] = `
+Array [
+  Object {
+    "firstName": "Nico",
+    "id": "123",
+    "lastName": "Peters",
+    "links": Object {
+      "self": "http://some-url.com/123",
+    },
+  },
+  Object {
+    "firstName": "Karl",
+    "id": "124",
+    "lastName": "Maschmann",
+    "links": Object {
+      "self": "http://some-url.com/124",
+    },
+  },
+]
+`;
+
+exports[`deserialize when on the resource level with a single resource deserializes the links 1`] = `
+Object {
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+  "links": Object {
+    "self": "http://some-url.com/123",
+  },
+}
+`;
+
 exports[`deserialize with a 1:1 relationship with a local id deserializes the json 1`] = `
 Object {
   "company": Object {
@@ -214,12 +246,43 @@ Object {
 }
 `;
 
-exports[`deserialize with links when on the root level deserializes the links 1`] = `
+exports[`deserialize with links when on the root level with a resource array deserializes the links 1`] = `
+Array [
+  Object {
+    "firstName": "Nico",
+    "id": "123",
+    "lastName": "Peters",
+    "rootLinks": Object {
+      "dashboard": Object {
+        "meta": Object {
+          "title": "Dashboard",
+        },
+        "url": "http://example.com",
+      },
+    },
+  },
+  Object {
+    "firstName": "Karl",
+    "id": "124",
+    "lastName": "Maschmann",
+    "rootLinks": Object {
+      "dashboard": Object {
+        "meta": Object {
+          "title": "Dashboard",
+        },
+        "url": "http://example.com",
+      },
+    },
+  },
+]
+`;
+
+exports[`deserialize with links when on the root level with a single resource deserializes the links 1`] = `
 Object {
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
-  "links": Object {
+  "rootLinks": Object {
     "dashboard": Object {
       "meta": Object {
         "title": "Dashboard",
@@ -235,6 +298,62 @@ Object {
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
+}
+`;
+
+exports[`deserialize with root and resource level links with a resource array deserializes the links 1`] = `
+Array [
+  Object {
+    "firstName": "Nico",
+    "id": "123",
+    "lastName": "Peters",
+    "links": Object {
+      "self": "http://some-url.com/123",
+    },
+    "rootLinks": Object {
+      "dashboard": Object {
+        "meta": Object {
+          "title": "Dashboard",
+        },
+        "url": "http://example.com",
+      },
+    },
+  },
+  Object {
+    "firstName": "Karl",
+    "id": "124",
+    "lastName": "Maschmann",
+    "links": Object {
+      "self": "http://some-url.com/124",
+    },
+    "rootLinks": Object {
+      "dashboard": Object {
+        "meta": Object {
+          "title": "Dashboard",
+        },
+        "url": "http://example.com",
+      },
+    },
+  },
+]
+`;
+
+exports[`deserialize with root and resource level links with a single resource deserializes the links 1`] = `
+Object {
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+  "links": Object {
+    "self": "http://some-url.com/123",
+  },
+  "rootLinks": Object {
+    "dashboard": Object {
+      "meta": Object {
+        "title": "Dashboard",
+      },
+      "url": "http://example.com",
+    },
+  },
 }
 `;
 
