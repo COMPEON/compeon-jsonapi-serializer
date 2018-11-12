@@ -19,6 +19,40 @@ describe('deserialize', () => {
       })
     })
 
+    describe('with JSONAPI errors', () => {
+      describe('with an error array', () => {
+        const json = {
+          errors: [{
+            id: '123',
+            links: {
+              about: 'htpp://ulf.de'
+            },
+            title: 'Title'
+          }]
+        }
+
+        it('returns the errors', () => {
+          expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+
+      describe('with a non-array error', () => {
+        const json = {
+          errors: {
+            id: '123',
+            links: {
+              about: 'htpp://ulf.de'
+            },
+            title: 'Title'
+          }
+        }
+
+        it('returns an empty object', () => {
+          expect(deserialize()(json)).toEqual({})
+        })
+      })
+    })
+
     describe('with invalid attributes', () => {
       describe('when data is empty', () => {
         const json = {
@@ -35,6 +69,19 @@ describe('deserialize', () => {
 
         it('deserializes the json', () => {
           expect(deserialize()(json)).toMatchSnapshot()
+        })
+      })
+
+      describe('when data and errors both exist', () => {
+        const json = {
+          data: {},
+          errors: {}
+        }
+
+        it('throws an error', () => {
+          expect(() => deserialize()(json)).toThrowError(
+            'The keys `data` and `errors` must not coexist in a single document.'
+          )
         })
       })
     })

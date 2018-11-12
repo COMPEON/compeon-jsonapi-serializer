@@ -357,6 +357,18 @@ Object {
 }
 `;
 
+exports[`deserialize with simple attributes with JSONAPI errors with an error array returns the errors 1`] = `
+Array [
+  Object {
+    "id": "123",
+    "links": Object {
+      "about": "htpp://ulf.de",
+    },
+    "title": "Title",
+  },
+]
+`;
+
 exports[`deserialize with simple attributes with invalid attributes when data does not exist deserializes the json 1`] = `Object {}`;
 
 exports[`deserialize with simple attributes with invalid attributes when data is empty deserializes the json 1`] = `Object {}`;
