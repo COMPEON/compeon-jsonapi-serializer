@@ -8,6 +8,7 @@ import {
 } from 'lodash'
 
 import { extractIdentifier, renderIdentifier } from './common'
+import { isPresent } from './utils'
 
 const findInclude = (type, identifier, included) => (
   find(included, {
@@ -68,12 +69,20 @@ const deserializeResources = (resources, included, rootLinks, root = false) => (
 )
 
 export const deserialize = (options = {}) => subject => {
-  const { data, included, links: rootLinks } = subject
+  const { data, errors, included, links: rootLinks } = subject
 
-  if (Array.isArray(data)) {
-    return deserializeResources(data, included, rootLinks, true)
-  } else if (isPlainObject(data)) {
-    return deserializeResource(data, included, rootLinks, true)
+  if (isPresent(data) && isPresent(errors)) {
+    throw new Error('The keys `data` and `errors` must not coexist in a single document.')
+  }
+
+  if (isPresent(data)) {
+    if (Array.isArray(data)) {
+      return deserializeResources(data, included, rootLinks, true)
+    } else if (isPlainObject(data)) {
+      return deserializeResource(data, included, rootLinks, true)
+    }
+  } else if (isPresent(errors)) {
+    if (Array.isArray(errors)) return errors
   }
 
   return {}
