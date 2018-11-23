@@ -13,10 +13,13 @@ A **client-side** serialization and deserialization library for JSON API which s
 ### Serialization
 
 ```javascript
-serialize(options)(data)
+serialize(type, options)(data)
 ```
+**type**:
 
-**Options**:
+The resource type that will be rendered for the root resource.
+
+**options**:
 
 - `attributes`: An array of whitelisted attributes. Relationships have to be included.
 - `relationships`:
@@ -122,6 +125,9 @@ const json = {
           type: 'planets'
         }
       }
+    },
+    links: {
+      self: 'http://example.com/resource-link'
     }
   },
   included: [
@@ -137,7 +143,7 @@ const json = {
   ],
   links: {
     dashboard: {
-      url: 'http://example.com',
+      url: 'http://example.com/root-link',
       meta: {
         title: 'Dashboard'
       }
@@ -157,8 +163,11 @@ will deserialize to
   id: '123',
   lastName: 'Dent',
   links: {
+    self: 'http://example.com/resource-link'
+  },
+  rootLinks: {
     dashboard: {
-      url: 'http://example.com',
+      url: 'http://example.com/root-link',
       meta: {
         title: 'Dashboard'
       }
@@ -172,8 +181,6 @@ will deserialize to
   }
 }
 ```
-
-Please note that right now **only root level links are deserialized**. Support for resource level links is planned for a future release.
 
 ## Todo
 
