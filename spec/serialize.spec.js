@@ -66,9 +66,6 @@ describe('serialize', () => {
       })
     })
 
-    // An array is not allowed as a root level resource, but it can be used to
-    // update relationships. In this case attributes will be ignored.
-    // http://jsonapi.org/format/#crud-updating-relationships
     describe('with an array of resources and attributes', () => {
       const data = [
         {
@@ -79,16 +76,27 @@ describe('serialize', () => {
         {
           id: '134',
           firstName: 'Frank',
-          lastName: 'Wüller'
+          lastName: 'Wüller',
+          company: {
+            id: '66',
+            name: 'Compeon'
+          }
+
         }
       ]
       const options = {
-        attributes: ['firstName', 'lastName']
+        attributes: ['company', 'firstName', 'lastName'],
+        relationships: {
+          company: {
+            attributes: ['name'],
+            type: 'companies'
+          }
+        }
       }
 
       const userSerializer = serialize('user', options)
 
-      it('ignores the attributes and only serializes id and type', () => {
+      it('serializes the data', () => {
         expect(userSerializer(data)).toMatchSnapshot()
       })
     })
