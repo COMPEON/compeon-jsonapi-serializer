@@ -2,7 +2,6 @@ import {
   includes,
   isEmpty,
   isPlainObject,
-  omit,
   pick,
   reduce
 } from 'lodash'
