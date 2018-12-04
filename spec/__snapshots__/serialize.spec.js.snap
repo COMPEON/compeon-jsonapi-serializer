@@ -413,16 +413,41 @@ Object {
 }
 `;
 
-exports[`serialize with simple attributes with an array of resources and attributes ignores the attributes and only serializes id and type 1`] = `
+exports[`serialize with simple attributes with an array of resources and attributes serializes the data 1`] = `
 Object {
   "data": Array [
     Object {
+      "attributes": Object {
+        "firstName": "Nico",
+        "lastName": "Peters",
+      },
       "id": "123",
       "type": "user",
     },
     Object {
+      "attributes": Object {
+        "firstName": "Frank",
+        "lastName": "Wüller",
+      },
       "id": "134",
+      "relationships": Object {
+        "company": Object {
+          "data": Object {
+            "id": "66",
+            "type": "companies",
+          },
+        },
+      },
       "type": "user",
+    },
+  ],
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "name": "Compeon",
+      },
+      "id": "66",
+      "type": "companies",
     },
   ],
 }

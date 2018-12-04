@@ -105,9 +105,9 @@ const serializeResource = (type, resource, options, root = false) => {
   return renderResource(type, identifier, null, null, included)
 }
 
-const serializeResources = (type, resources, options) =>
-  reduce(resources, (result, value, key) => {
-    const { data, included } = serializeResource(type, value, options)
+const serializeResources = (type, resources, options, root = false) => {
+  const { included, ...result } = reduce(resources, (result, value, key) => {
+    const { data, included } = serializeResource(type, value, options, root)
 
     if (data) result.data.push(data)
     if (!isEmpty(included)) result.included = mergeArrays(result.included, included)
@@ -115,12 +115,20 @@ const serializeResources = (type, resources, options) =>
     return result
   }, { data: [] })
 
+  if (!included) return result
+
+  return {
+    ...result,
+    included: removeDuplicateIncludes(included)
+  }
+}
+
 export const serialize = (type, options = {}) => {
   if (!type) throw 'You did not specify a type for the root resource.'
 
   return subject => {
     if (isPlainObject(subject)) return serializeResource(type, subject, options, true)
-    if (Array.isArray(subject)) return serializeResources(type, subject, omit(options, 'attributes'))
+    if (Array.isArray(subject)) return serializeResources(type, subject, options, true)
     return renderResource(type)
   }
 }
