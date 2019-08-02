@@ -45,9 +45,11 @@ const deserializeResource = (resource, included, rootLinks, root = false) => {
   const { attributes, links, relationships, type } = resource
   const {
     attributes: includedAttributes,
+    links: includedLinks,
     relationships: includedRelationships
   } = findInclude(type, identifier, included) || {}
   const renderedAttributes = root ? attributes : includedAttributes
+  const renderedLinks = root ? links : includedLinks
 
   // Resources without a valid identifier are actually not specified, but
   // otherwise responses that are no resource and thus do not have a valid
@@ -60,7 +62,7 @@ const deserializeResource = (resource, included, rootLinks, root = false) => {
     ...deserializeRelationships(relationships, included),
     ...deserializeRelationships(includedRelationships, included),
     ...renderLinks(rootLinks, 'rootLinks'),
-    ...renderLinks(links)
+    ...renderLinks(renderedLinks)
   }
 }
 
