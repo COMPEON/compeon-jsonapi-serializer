@@ -399,6 +399,58 @@ describe('deserialize', () => {
       })
     })
 
+    describe('with relationships with links', () => {
+      const json = {
+        data: {
+          attributes: {
+            firstName: 'Nico',
+            lastName: 'Peters'
+          },
+          relationships: {
+            companies: {
+              data: [
+                {
+                  id: '666',
+                  type: 'companies'
+                },
+                {
+                  id: '667',
+                  type: 'companies'
+                }
+              ]
+            }
+          },
+          id: '123',
+          type: 'users'
+        },
+        included: [
+          {
+            id: '666',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon GmbH',
+              city: 'Düsseldorf'
+            },
+            links: {
+              self: 'htpp://ulf.de/companies/666'
+            }
+          },
+          {
+            id: '667',
+            type: 'companies',
+            attributes: {
+              name: 'Compeon 4.0 GmbH',
+              city: 'Düsseldorf'
+            }
+          }
+        ]
+      }
+
+      it('deserializes the json', () => {
+        expect(deserialize()(json)).toMatchSnapshot()
+      })
+    })
+
     describe('with relationships inside an array of resources', () => {
       const json = {
         data: [
