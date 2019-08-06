@@ -15,6 +15,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src",
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
     "test": "jest"
   },
   "devDependencies": {
