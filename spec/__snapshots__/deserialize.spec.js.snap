@@ -223,6 +223,29 @@ Array [
 ]
 `;
 
+exports[`deserialize with a 1:n relationship with relationships with links deserializes the json 1`] = `
+Object {
+  "companies": Array [
+    Object {
+      "city": "Düsseldorf",
+      "id": "666",
+      "links": Object {
+        "self": "htpp://ulf.de/companies/666",
+      },
+      "name": "Compeon GmbH",
+    },
+    Object {
+      "city": "Düsseldorf",
+      "id": "667",
+      "name": "Compeon 4.0 GmbH",
+    },
+  ],
+  "firstName": "Nico",
+  "id": "123",
+  "lastName": "Peters",
+}
+`;
+
 exports[`deserialize with an array of resources with valid attributes deserializes the json 1`] = `
 Array [
   Object {
