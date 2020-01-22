@@ -1,0 +1,23 @@
+name: CI
+on: push
+jobs:
+  Fetch:
+    runs-on: ubuntu-latest
+    container: lambci/lambda:build-nodejs8.10
+    steps:
+      - uses: actions/checkout@v1
+      - run: npm install -g yarn
+        working-directory: fetch
+      - run: yarn install
+        working-directory: fetch
+      - run: yarn test
+        working-directory: fetch
+      - run: yarn lint
+        working-directory: fetch
+
+  All:
+    runs-on: ubuntu-latest
+    needs:
+      - Fetch
+    steps:
+      - run: echo ok
