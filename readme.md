@@ -40,7 +40,12 @@ const data = {
     // or
     lid: '79862106-6aac-4a66-9553-d1453fc267de',
     name: 'Earth'
-  }
+  },
+  orbiters: [{
+    id: '42',
+    _type: 'satellites',
+    name: 'Not So Deep Thought'
+  }]
 }
 
 const options = {
@@ -49,6 +54,10 @@ const options = {
     planet: {
       attributes: ['name'],
       type: 'planets'
+    },
+    orbiters: {
+      attributes: ['name'],
+      type: 'polymorphic'
     }
   }
 }
@@ -76,6 +85,14 @@ will serialize to
           lid: '79862106-6aac-4a66-9553-d1453fc267de',
           type: 'planets'
         }
+      },
+      orbiters: {
+        data: [
+          {
+            id: '42',
+            type: 'satellites'
+          }
+        ]
       }
     }
   },
@@ -87,6 +104,13 @@ will serialize to
       type: 'planets',
       attributes: {
         name: 'Earth'
+      }
+    },
+    {
+      id: '42',
+      type: 'satellites',
+      attributes: {
+        name: 'Not So Deep Thought'
       }
     }
   ]

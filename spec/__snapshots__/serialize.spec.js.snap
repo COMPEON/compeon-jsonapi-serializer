@@ -51,6 +51,27 @@ Object {
 }
 `;
 
+exports[`serialize with a 1:1 relationship with a polymorphic relationship serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "organization": Object {
+        "data": Object {
+          "id": "666",
+          "type": "companies",
+        },
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
 exports[`serialize with a 1:1 relationship with includes with a local id serializes the data 1`] = `
 Object {
   "data": Object {
@@ -184,6 +205,33 @@ Object {
           Object {
             "id": "667",
             "type": "companies",
+          },
+        ],
+      },
+    },
+    "type": "users",
+  },
+}
+`;
+
+exports[`serialize with a 1:n relationship with a polymorphic relationship serializes the data 1`] = `
+Object {
+  "data": Object {
+    "attributes": Object {
+      "firstName": "Nico",
+      "lastName": "Peters",
+    },
+    "id": "511",
+    "relationships": Object {
+      "organizations": Object {
+        "data": Array [
+          Object {
+            "id": "666",
+            "type": "companies",
+          },
+          Object {
+            "id": "667",
+            "type": "multiplier-organizations",
           },
         ],
       },

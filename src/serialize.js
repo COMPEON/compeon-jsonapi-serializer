@@ -76,6 +76,10 @@ const serializeResource = (type, resource, options, root = false) => {
   const attributeOptions = options.attributes || []
   const relationshipOptions = options.relationships || {}
   const relationshipNames = Object.keys(relationshipOptions)
+  const isPolymorphic = type === 'polymorphic'
+
+  if (isPolymorphic) attributeOptions.push('_type')
+
   const {
     attributes,
     identifier,
@@ -85,6 +89,15 @@ const serializeResource = (type, resource, options, root = false) => {
     included,
     relationships: serializedRelationships
   } = serializeRelationships(relationships, relationshipOptions)
+
+  if (isPolymorphic) {
+    if (!attributes._type) {
+      throw `You did not specify a _type for the relationship to the object with id "${identifier}"`
+    }
+
+    type = attributes._type
+    delete attributes._type
+  }
 
   if (root) {
     return renderResource(

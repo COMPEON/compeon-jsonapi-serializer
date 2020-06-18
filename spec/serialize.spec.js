@@ -129,6 +129,33 @@ describe('serialize', () => {
       })
     })
 
+    describe('with a polymorphic relationship', () => {
+      const data = {
+        id: '511',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        organization: {
+          id: '666',
+          name: 'Compeon GmbH',
+          _type: 'companies'
+        }
+      }
+      const options = {
+        attributes: ['organization', 'firstName', 'lastName'],
+        relationships: {
+          organization: {
+            type: 'polymorphic'
+          }
+        }
+      }
+
+      const serializeUser = serialize('users', options)
+
+      it('serializes the data', () => {
+        expect(serializeUser(data)).toMatchSnapshot()
+      })
+    })
+
     describe('with a local id', () => {
       const data = {
         id: '511',
@@ -256,6 +283,40 @@ describe('serialize', () => {
         relationships: {
           companies: {
             type: 'companies'
+          }
+        }
+      }
+
+      const serializeUser = serialize('users', options)
+
+      it('serializes the data', () => {
+        expect(serializeUser(data)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a polymorphic relationship', () => {
+      const data = {
+        id: '511',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        organizations: [
+          {
+            id: '666',
+            name: 'Compeon GmbH',
+            _type: 'companies'
+          },
+          {
+            id: '667',
+            name: 'Compeon 4.0 GmbH',
+            _type: 'multiplier-organizations'
+          }
+        ]
+      }
+      const options = {
+        attributes: ['organizations', 'firstName', 'lastName'],
+        relationships: {
+          organizations: {
+            type: 'polymorphic'
           }
         }
       }
@@ -510,6 +571,29 @@ describe('serialize', () => {
         attributes: ['company'],
         relationships: {
           company: {
+          }
+        }
+      }
+
+      const userSerializer = serialize('users', options)
+
+      it('throws an error', () => {
+        expect(() => userSerializer(data)).toThrowError()
+      })
+    })
+
+    describe('when no relationship type is set for a polymorphic relationship', () => {
+      const data = {
+        id: '123',
+        organization: {
+          id: '612'
+        }
+      }
+      const options = {
+        attributes: ['organization'],
+        relationships: {
+          organization: {
+            type: 'polymorphic'
           }
         }
       }
