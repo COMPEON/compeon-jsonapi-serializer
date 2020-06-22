@@ -32,9 +32,12 @@ const deserializeRelationships = (relationships, included) => (
       deserializedResource = deserializeResources(data, included, links)
     } else if (isPlainObject(data)) {
       deserializedResource = deserializeResource(data, included, links)
+      if (isEmpty(deserializedResource)) deserializedResource = null
+    } else if (data == null) {
+      deserializedResource = null
     }
 
-    if (!isEmpty(deserializedResource)) result[key] = deserializedResource
+    result[key] = deserializedResource
 
     return result
   }, {})
