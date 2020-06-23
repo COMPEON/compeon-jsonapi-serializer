@@ -261,8 +261,10 @@ Array [
 ]
 `;
 
-exports[`deserialize with empty relationships ignores the relationship 1`] = `
+exports[`deserialize with empty relationships renders the empty relationships 1`] = `
 Object {
+  "colleagues": Array [],
+  "company": null,
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
@@ -316,8 +318,9 @@ Object {
 }
 `;
 
-exports[`deserialize with relationships that have no identifier ignores the relationship 1`] = `
+exports[`deserialize with relationships that have no identifier renders an empty relationship 1`] = `
 Object {
+  "company": null,
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
