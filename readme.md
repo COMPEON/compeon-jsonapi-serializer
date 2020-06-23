@@ -42,7 +42,7 @@ const data = {
     name: 'Earth'
   },
   orbiters: [
-    withPolymorphicType('satellites', [{
+    withPolymorphicType('satellites', {
       id: '42',
       name: 'Not So Deep Thought'
     })
