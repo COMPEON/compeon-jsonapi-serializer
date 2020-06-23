@@ -1,4 +1,5 @@
 import {
+  compact,
   find,
   get,
   isEmpty,
@@ -26,15 +27,16 @@ const deserializeRelationships = (relationships, included) => (
   reduce(relationships, (result, value, key) => {
     const data = get(value, 'data')
     const links = get(value, 'links')
-    let deserializedResource
+    let deserializedResource = null
 
     if (Array.isArray(data)) {
       deserializedResource = deserializeResources(data, included, links)
     } else if (isPlainObject(data)) {
       deserializedResource = deserializeResource(data, included, links)
+      if (isEmpty(deserializedResource)) deserializedResource = null
     }
 
-    if (!isEmpty(deserializedResource)) result[key] = deserializedResource
+    result[key] = deserializedResource
 
     return result
   }, {})
@@ -54,7 +56,7 @@ const deserializeResource = (resource, included, rootLinks, root = false) => {
   // Resources without a valid identifier are actually not specified, but
   // otherwise responses that are no resource and thus do not have a valid
   // identifier could not be deserialized.
-  if (!root && !identifier.valid) return {}
+  if (!root && !identifier.valid) return null
 
   return {
     ...renderIdentifier(identifier),
@@ -67,7 +69,7 @@ const deserializeResource = (resource, included, rootLinks, root = false) => {
 }
 
 const deserializeResources = (resources, included, rootLinks, root = false) => (
-  map(resources, resource => deserializeResource(resource, included, rootLinks, root))
+  compact(map(resources, resource => deserializeResource(resource, included, rootLinks, root)))
 )
 
 export const deserialize = (options = {}) => subject => {

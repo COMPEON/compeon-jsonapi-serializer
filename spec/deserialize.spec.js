@@ -631,12 +631,15 @@ describe('deserialize', () => {
         relationships: {
           company: {
             data: null
+          },
+          colleagues: {
+            data: []
           }
         }
       }
     }
 
-    it('ignores the relationship', () => {
+    it('renders the empty relationships', () => {
       expect(deserialize()(json)).toMatchSnapshot()
     })
   })
@@ -668,7 +671,7 @@ describe('deserialize', () => {
       ]
     }
 
-    it('ignores the relationship', () => {
+    it('renders an empty relationship', () => {
       expect(deserialize()(json)).toMatchSnapshot()
     })
   })
