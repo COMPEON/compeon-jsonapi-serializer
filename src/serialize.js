@@ -92,7 +92,7 @@ const serializeResource = (type, resource, options, root = false) => {
 
   if (type === 'polymorphic') {
     if (polymorphicType) type = polymorphicType
-    else throw `You did not specify a type for the resource with id ${identifier}.`
+    else throw `You did not specify a type for the resource with ${identifier.name} ${identifier.value}.`
   }
 
   if (root) {
