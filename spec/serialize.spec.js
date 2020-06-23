@@ -1,4 +1,5 @@
 import { serialize } from 'serialize'
+import { withPolymorphicType } from 'common'
 
 describe('serialize', () => {
   describe('with simple attributes', () => {
@@ -134,11 +135,10 @@ describe('serialize', () => {
         id: '511',
         firstName: 'Nico',
         lastName: 'Peters',
-        organization: {
+        organization: withPolymorphicType('companies', {
           id: '666',
-          name: 'Compeon GmbH',
-          _type: 'companies'
-        }
+          name: 'Compeon GmbH'
+        })
       }
       const options = {
         attributes: ['organization', 'firstName', 'lastName'],
@@ -300,22 +300,27 @@ describe('serialize', () => {
         firstName: 'Nico',
         lastName: 'Peters',
         organizations: [
-          {
+          withPolymorphicType('companies', {
             id: '666',
-            name: 'Compeon GmbH',
-            _type: 'companies'
-          },
-          {
+            name: 'Compeon GmbH'
+          }),
+          withPolymorphicType('multiplier-organizations', {
             id: '667',
-            name: 'Compeon 4.0 GmbH',
-            _type: 'multiplier-organizations'
-          }
-        ]
+            name: 'Compeon 4.0 GmbH'
+          })
+        ],
+        colleagues: withPolymorphicType('users', [
+          { id: '777', name: 'Arno Admin' },
+          { id: '333', name: 'Ben Utzer' }
+        ])
       }
       const options = {
-        attributes: ['organizations', 'firstName', 'lastName'],
+        attributes: ['organizations', 'colleagues', 'firstName', 'lastName'],
         relationships: {
           organizations: {
+            type: 'polymorphic'
+          },
+          colleagues: {
             type: 'polymorphic'
           }
         }

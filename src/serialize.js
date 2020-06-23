@@ -6,7 +6,7 @@ import {
   reduce
 } from 'lodash'
 
-import { extractIdentifier, renderIdentifier } from './common'
+import { extractIdentifier, renderIdentifier, COMPEON_API_JS_TYPE } from './common'
 import { mergeArrays, partition } from './utils'
 
 const removeDuplicateIncludes = included => {
@@ -28,6 +28,7 @@ const removeDuplicateIncludes = included => {
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
   const permittedAttributes = pick(resource, attributeNames)
+  const polymorphicType = resource[COMPEON_API_JS_TYPE]
   const [relationships, attributes] = partition(permittedAttributes, (_, key) => (
     includes(relationshipNames, key)
   ))
@@ -35,7 +36,8 @@ const extractResourceInformation = (resource, attributeNames, relationshipNames)
   return {
     attributes,
     identifier,
-    relationships
+    relationships,
+    polymorphicType
   }
 }
 
@@ -76,27 +78,21 @@ const serializeResource = (type, resource, options, root = false) => {
   const attributeOptions = options.attributes || []
   const relationshipOptions = options.relationships || {}
   const relationshipNames = Object.keys(relationshipOptions)
-  const isPolymorphic = type === 'polymorphic'
-
-  if (isPolymorphic) attributeOptions.push('_type')
 
   const {
     attributes,
     identifier,
-    relationships
+    relationships,
+    polymorphicType
   } = extractResourceInformation(resource, attributeOptions, relationshipNames)
   const {
     included,
     relationships: serializedRelationships
   } = serializeRelationships(relationships, relationshipOptions)
 
-  if (isPolymorphic) {
-    if (!attributes._type) {
-      throw `You did not specify a _type for the relationship to the object with id "${identifier}"`
-    }
-
-    type = attributes._type
-    delete attributes._type
+  if (type === 'polymorphic') {
+    if (polymorphicType) type = polymorphicType
+    else throw `You did not specify a type for the resource with id ${identifier}.`
   }
 
   if (root) {

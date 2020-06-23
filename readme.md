@@ -41,11 +41,21 @@ const data = {
     lid: '79862106-6aac-4a66-9553-d1453fc267de',
     name: 'Earth'
   },
-  orbiters: [{
-    id: '42',
-    _type: 'satellites',
-    name: 'Not So Deep Thought'
-  }]
+  orbiters: [
+    withPolymorphicType('satellites', [{
+      id: '42',
+      name: 'Not So Deep Thought'
+    })
+  ]
+  // alternatively you may apply the type to all entries in the relationship:
+  // orbiters: withPolymorphicType('satellites', [
+  //   {
+  //     id: '42',
+  //     name: 'Not So Deep Thought'
+  //   },
+  //   ...
+  // ])
+  )
 }
 
 const options = {

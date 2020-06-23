@@ -223,6 +223,18 @@ Object {
     },
     "id": "511",
     "relationships": Object {
+      "colleagues": Object {
+        "data": Array [
+          Object {
+            "id": "777",
+            "type": "users",
+          },
+          Object {
+            "id": "333",
+            "type": "users",
+          },
+        ],
+      },
       "organizations": Object {
         "data": Array [
           Object {
