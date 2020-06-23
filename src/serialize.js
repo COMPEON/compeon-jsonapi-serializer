@@ -91,8 +91,15 @@ const serializeResource = (type, resource, options, root = false) => {
   } = serializeRelationships(relationships, relationshipOptions)
 
   if (type === 'polymorphic') {
-    if (polymorphicType) type = polymorphicType
-    else throw `You did not specify a type for the resource with ${identifier.name} ${identifier.value}.`
+    if (root) throw 'You should use separate serializers to render different root resources.'
+
+    if (polymorphicType) {
+      type = polymorphicType
+    } else if (identifier.valid) {
+      throw `You did not specify a type for the resource with ${identifier.name} ${identifier.value}.`
+    } else {
+      throw 'You did not specify a type for one of the polymorphic resources.'
+    }
   }
 
   if (root) {
