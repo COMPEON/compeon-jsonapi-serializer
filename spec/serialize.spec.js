@@ -1,4 +1,5 @@
 import { serialize } from 'serialize'
+import { withPolymorphicType } from 'common'
 
 describe('serialize', () => {
   describe('with simple attributes', () => {
@@ -118,6 +119,32 @@ describe('serialize', () => {
         relationships: {
           company: {
             type: 'companies'
+          }
+        }
+      }
+
+      const serializeUser = serialize('users', options)
+
+      it('serializes the data', () => {
+        expect(serializeUser(data)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a polymorphic relationship', () => {
+      const data = {
+        id: '511',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        organization: withPolymorphicType('companies', {
+          id: '666',
+          name: 'Compeon GmbH'
+        })
+      }
+      const options = {
+        attributes: ['organization', 'firstName', 'lastName'],
+        relationships: {
+          organization: {
+            type: 'polymorphic'
           }
         }
       }
@@ -256,6 +283,45 @@ describe('serialize', () => {
         relationships: {
           companies: {
             type: 'companies'
+          }
+        }
+      }
+
+      const serializeUser = serialize('users', options)
+
+      it('serializes the data', () => {
+        expect(serializeUser(data)).toMatchSnapshot()
+      })
+    })
+
+    describe('with a polymorphic relationship', () => {
+      const data = {
+        id: '511',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        organizations: [
+          withPolymorphicType('companies', {
+            id: '666',
+            name: 'Compeon GmbH'
+          }),
+          withPolymorphicType('multiplier-organizations', {
+            id: '667',
+            name: 'Compeon 4.0 GmbH'
+          })
+        ],
+        colleagues: withPolymorphicType('users', [
+          { id: '777', name: 'Arno Admin' },
+          { id: '333', name: 'Ben Utzer' }
+        ])
+      }
+      const options = {
+        attributes: ['organizations', 'colleagues', 'firstName', 'lastName'],
+        relationships: {
+          organizations: {
+            type: 'polymorphic'
+          },
+          colleagues: {
+            type: 'polymorphic'
           }
         }
       }
@@ -510,6 +576,29 @@ describe('serialize', () => {
         attributes: ['company'],
         relationships: {
           company: {
+          }
+        }
+      }
+
+      const userSerializer = serialize('users', options)
+
+      it('throws an error', () => {
+        expect(() => userSerializer(data)).toThrowError()
+      })
+    })
+
+    describe('when no relationship type is set for a polymorphic relationship', () => {
+      const data = {
+        id: '123',
+        organization: {
+          id: '612'
+        }
+      }
+      const options = {
+        attributes: ['organization'],
+        relationships: {
+          organization: {
+            type: 'polymorphic'
           }
         }
       }
