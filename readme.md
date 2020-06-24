@@ -31,6 +31,7 @@ The resource type that will be rendered for the root resource.
 
 ```javascript
 import { serialize } from '@compeon/jsonapi-serializer'
+// or import { serialize, withPolymorphicType } from '@compeon/jsonapi-serializer'
 
 const data = {
   firstName: 'Arthur',
