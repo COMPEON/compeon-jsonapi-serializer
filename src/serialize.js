@@ -25,9 +25,16 @@ const removeDuplicateIncludes = included => {
   }, [])
 }
 
+const pickAttributes = (resource, attributeNames) => {
+  const attributes = attributeNames == null ? resource : pick(resource, attributeNames)
+  delete attributes.id
+
+  return attributes
+}
+
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
-  const permittedAttributes = attributeNames == null ? resource : pick(resource, attributeNames)
+  const permittedAttributes = pickAttributes(resource, attributeNames)
   const polymorphicType = resource[COMPEON_API_JS_TYPE]
   const [relationships, attributes] = partition(permittedAttributes, (_, key) => (
     includes(relationshipNames, key)

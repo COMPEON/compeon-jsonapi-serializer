@@ -5,7 +5,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -37,7 +36,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -54,7 +52,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -69,7 +66,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -86,7 +82,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -101,7 +96,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "1234",
       "lastName": "Peters",
     },
     "id": "1234",
@@ -133,7 +127,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "1234",
       "lastName": "Peters",
     },
     "id": "1234",
@@ -150,7 +143,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "612",
         "name": "Compeon GmbH",
       },
       "id": "612",
@@ -163,9 +155,6 @@ Object {
 exports[`serialize with a 1:n relationship when no relationship identifier is found™ ignores the faulty relationship and serializes the valid one 1`] = `
 Object {
   "data": Object {
-    "attributes": Object {
-      "id": "123",
-    },
     "id": "123",
     "relationships": Object {
       "companies": Object {
@@ -182,7 +171,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -197,7 +185,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -228,7 +215,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -243,7 +229,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -266,7 +251,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -274,7 +258,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -289,7 +272,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -324,7 +306,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -332,7 +313,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -340,7 +320,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "777",
         "name": "Arno Admin",
       },
       "id": "777",
@@ -348,7 +327,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "333",
         "name": "Ben Utzer",
       },
       "id": "333",
@@ -363,7 +341,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -394,7 +371,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -409,7 +385,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -432,7 +407,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -440,7 +414,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -484,7 +457,6 @@ Object {
     },
     Object {
       "attributes": Object {
-        "id": "12",
         "name": "Compeon GmbH",
       },
       "id": "12",
@@ -513,7 +485,6 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
-      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -538,7 +509,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -547,7 +517,6 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Arno",
-        "id": "152",
         "lastName": "Apitester",
       },
       "id": "152",
@@ -579,7 +548,6 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Nico",
-        "id": "123",
         "lastName": "Peters",
       },
       "id": "123",
@@ -588,7 +556,6 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Frank",
-        "id": "134",
         "lastName": "Wüller",
       },
       "id": "134",
@@ -606,7 +573,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "id": "66",
         "name": "Compeon",
       },
       "id": "66",
@@ -631,7 +597,6 @@ Object {
     "attributes": Object {
       "email": "nico.peters@example.com",
       "firstName": "Nico",
-      "id": "123",
       "lastName": "Peters",
     },
     "id": "123",
