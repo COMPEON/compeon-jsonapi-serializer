@@ -616,6 +616,15 @@ Object {
 }
 `;
 
+exports[`serialize with simple attributes with empty attributes list serializes no attributes 1`] = `
+Object {
+  "data": Object {
+    "id": "123",
+    "type": "users",
+  },
+}
+`;
+
 exports[`serialize with simple attributes with valid data serializes the data 1`] = `
 Object {
   "data": Object {

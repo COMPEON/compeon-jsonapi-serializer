@@ -49,6 +49,21 @@ describe('serialize', () => {
       })
     })
 
+    describe('with empty attributes list', () => {
+      const data = {
+        id: '123',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        email: 'nico.peters@example.com'
+      }
+
+      const serializer = serialize('users', { attributes: []})
+
+      it('serializes no attributes', () => {
+        expect(serializer(data)).toMatchSnapshot()
+      })
+    })
+
     describe('with an array of resources and attributes', () => {
       const data = [
         {
