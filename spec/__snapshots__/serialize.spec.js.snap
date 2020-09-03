@@ -118,6 +118,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "lid": "612",
         "name": "Compeon GmbH",
       },
       "lid": "612",
@@ -149,6 +150,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "id": "612",
         "name": "Compeon GmbH",
       },
       "id": "612",
@@ -180,6 +182,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -383,6 +386,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "lid": "666",
         "name": "Compeon GmbH",
       },
       "lid": "666",
@@ -390,6 +394,7 @@ Object {
     },
     Object {
       "attributes": Object {
+        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -427,6 +432,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -434,6 +440,7 @@ Object {
     },
     Object {
       "attributes": Object {
+        "id": "667",
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -463,24 +470,9 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "date": "19.03.2017",
-      },
-      "id": "95123",
-      "type": "versions",
-    },
-    Object {
-      "attributes": Object {
         "name": "Tag 1",
       },
       "id": "66",
-      "relationships": Object {
-        "version": Object {
-          "data": Object {
-            "id": "95123",
-            "type": "versions",
-          },
-        },
-      },
       "type": "tags",
     },
     Object {
@@ -492,6 +484,7 @@ Object {
     },
     Object {
       "attributes": Object {
+        "id": "12",
         "name": "Compeon GmbH",
       },
       "id": "12",
@@ -545,6 +538,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "id": "666",
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -553,6 +547,7 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Arno",
+        "id": "152",
         "lastName": "Apitester",
       },
       "id": "152",
@@ -611,6 +606,7 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "id": "66",
         "name": "Compeon",
       },
       "id": "66",

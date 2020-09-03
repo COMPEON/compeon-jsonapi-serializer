@@ -70,7 +70,6 @@ describe('serialize', () => {
       const options = {
         relationships: {
           company: {
-            attributes: ['name'],
             type: 'companies'
           }
         }
@@ -174,7 +173,6 @@ describe('serialize', () => {
         const options = {
           relationships: {
             company: {
-              attributes: ['name'],
               type: 'companies'
             }
           }
@@ -200,7 +198,6 @@ describe('serialize', () => {
         const options = {
           relationships: {
             company: {
-              attributes: ['name'],
               type: 'companies'
             }
           }
@@ -332,7 +329,6 @@ describe('serialize', () => {
       const options = {
         relationships: {
           companies: {
-            attributes: ['name'],
             type: 'companies'
           }
         }
@@ -365,7 +361,6 @@ describe('serialize', () => {
         const options = {
           relationships: {
             companies: {
-              attributes: ['name'],
               type: 'companies'
             }
           }
@@ -397,7 +392,6 @@ describe('serialize', () => {
         const options = {
           relationships: {
             companies: {
-              attributes: ['name'],
               type: 'companies'
             }
           }
@@ -436,15 +430,13 @@ describe('serialize', () => {
         const options = {
           relationships: {
             company: {
-              attributes: ['name', 'tags'],
               type: 'companies',
               relationships: {
                 tags: {
-                  attributes: ['name', 'version'],
                   type: 'tags',
+                  attributes: ['name'],
                   relationships: {
                     version: {
-                      attributes: ['date'],
                       type: 'versions'
                     }
                   }
@@ -485,15 +477,12 @@ describe('serialize', () => {
         const options = {
           relationships: {
             company: {
-              attributes: ['name'],
               type: 'companies'
             },
             employees: {
-              attributes: ['company', 'firstName', 'lastName'],
               type: 'users',
               relationships: {
                 company: {
-                  attributes: ['name'],
                   type: 'companies'
                 }
               }
