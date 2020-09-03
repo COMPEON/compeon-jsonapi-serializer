@@ -10,11 +10,8 @@ describe('serialize', () => {
         lastName: 'Peters',
         email: 'nico.peters@example.com'
       }
-      const options = {
-        attributes: ['firstName', 'lastName']
-      }
 
-      const serializeUser = serialize('users', options)
+      const serializeUser = serialize('users')
 
       it('serializes the data', () => {
         expect(serializeUser(data)).toMatchSnapshot()
@@ -31,39 +28,24 @@ describe('serialize', () => {
       })
     })
 
-    describe('with empty attributes', () => {
-      const data = {
-        id: '125',
-        firstName: 'Nico'
-      }
-
-      const serializeUser = serialize('users')
-
-      it('serializes no attributes key', () => {
-        expect(serializeUser(data)).toMatchSnapshot()
-      })
-    })
-
     describe('with missing type information', () => {
       it('throws an error', () => {
         expect(() => serialize()).toThrowError()
       })
     })
 
-    describe('with an array of resources and no attributes', () => {
-      const data = [
-        {
-          id: '123'
-        },
-        {
-          id: '134'
-        }
-      ]
+    describe('with whitelisted attributes', () => {
+      const data = {
+        id: '123',
+        firstName: 'Nico',
+        lastName: 'Peters',
+        email: 'nico.peters@example.com'
+      }
 
-      const userSerializer = serialize('user')
+      const serializer = serialize('users', { attributes: ['firstName', 'lastName']})
 
-      it('serializes the data', () => {
-        expect(userSerializer(data)).toMatchSnapshot()
+      it('only serializes specified attributes', () => {
+        expect(serializer(data)).toMatchSnapshot()
       })
     })
 
@@ -86,7 +68,6 @@ describe('serialize', () => {
         }
       ]
       const options = {
-        attributes: ['company', 'firstName', 'lastName'],
         relationships: {
           company: {
             attributes: ['name'],
@@ -115,7 +96,6 @@ describe('serialize', () => {
         }
       }
       const options = {
-        attributes: ['company', 'firstName', 'lastName'],
         relationships: {
           company: {
             type: 'companies'
@@ -141,7 +121,6 @@ describe('serialize', () => {
         })
       }
       const options = {
-        attributes: ['organization', 'firstName', 'lastName'],
         relationships: {
           organization: {
             type: 'polymorphic'
@@ -167,7 +146,6 @@ describe('serialize', () => {
         }
       }
       const options = {
-        attributes: ['company', 'firstName', 'lastName'],
         relationships: {
           company: {
             type: 'companies'
@@ -179,28 +157,6 @@ describe('serialize', () => {
 
       it('serializes the data', () => {
         expect(serializeUser(data)).toMatchSnapshot()
-      })
-    })
-
-    describe('when no relationship identifier is found', () => {
-      const data = {
-        id: '123',
-        company: {
-          name: 'Compeon GmbH'
-        }
-      }
-      const options = {
-        relationships: {
-          company: {
-            type: 'companies'
-          }
-        }
-      }
-
-      const userSerializer = serialize('users', options)
-
-      it('ignores the relationship', () => {
-        expect(userSerializer(data)).toMatchSnapshot()
       })
     })
 
@@ -216,7 +172,6 @@ describe('serialize', () => {
           }
         }
         const options = {
-          attributes: ['firstName', 'lastName', 'company'],
           relationships: {
             company: {
               attributes: ['name'],
@@ -243,7 +198,6 @@ describe('serialize', () => {
           }
         }
         const options = {
-          attributes: ['firstName', 'lastName', 'company'],
           relationships: {
             company: {
               attributes: ['name'],
@@ -279,7 +233,6 @@ describe('serialize', () => {
         ]
       }
       const options = {
-        attributes: ['companies', 'firstName', 'lastName'],
         relationships: {
           companies: {
             type: 'companies'
@@ -315,7 +268,6 @@ describe('serialize', () => {
         ])
       }
       const options = {
-        attributes: ['organizations', 'colleagues', 'firstName', 'lastName'],
         relationships: {
           organizations: {
             type: 'polymorphic'
@@ -350,7 +302,6 @@ describe('serialize', () => {
         ]
       }
       const options = {
-        attributes: ['companies', 'firstName', 'lastName'],
         relationships: {
           companies: {
             type: 'companies'
@@ -379,7 +330,6 @@ describe('serialize', () => {
         ]
       }
       const options = {
-        attributes: ['companies'],
         relationships: {
           companies: {
             attributes: ['name'],
@@ -413,7 +363,6 @@ describe('serialize', () => {
           ]
         }
         const options = {
-          attributes: ['companies', 'firstName', 'lastName'],
           relationships: {
             companies: {
               attributes: ['name'],
@@ -446,7 +395,6 @@ describe('serialize', () => {
           ]
         }
         const options = {
-          attributes: ['companies', 'firstName', 'lastName'],
           relationships: {
             companies: {
               attributes: ['name'],
@@ -486,7 +434,6 @@ describe('serialize', () => {
           }
         }
         const options = {
-          attributes: ['company', 'firstName', 'lastName'],
           relationships: {
             company: {
               attributes: ['name', 'tags'],
@@ -536,7 +483,6 @@ describe('serialize', () => {
           ]
         }
         const options = {
-          attributes: ['company', 'employees', 'firstName', 'lastName'],
           relationships: {
             company: {
               attributes: ['name'],
@@ -573,7 +519,6 @@ describe('serialize', () => {
         }
       }
       const options = {
-        attributes: ['company'],
         relationships: {
           company: {
           }
@@ -595,7 +540,6 @@ describe('serialize', () => {
         }
       }
       const options = {
-        attributes: ['organization'],
         relationships: {
           organization: {
             type: 'polymorphic'

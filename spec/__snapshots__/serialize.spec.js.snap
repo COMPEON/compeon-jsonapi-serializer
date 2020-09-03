@@ -1,19 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`serialize with a 1:1 relationship when no relationship identifier is found ignores the relationship 1`] = `
-Object {
-  "data": Object {
-    "id": "123",
-    "type": "users",
-  },
-}
-`;
-
 exports[`serialize with a 1:1 relationship with a local id serializes the data 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -27,6 +19,16 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "lid": "666",
+        "name": "Compeon GmbH",
+      },
+      "lid": "666",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
@@ -35,6 +37,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -48,6 +51,16 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "id": "666",
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
@@ -56,6 +69,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -69,6 +83,16 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "id": "666",
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
@@ -77,6 +101,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "1234",
       "lastName": "Peters",
     },
     "id": "1234",
@@ -107,6 +132,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "1234",
       "lastName": "Peters",
     },
     "id": "1234",
@@ -135,6 +161,9 @@ Object {
 exports[`serialize with a 1:n relationship when no relationship identifier is found™ ignores the faulty relationship and serializes the valid one 1`] = `
 Object {
   "data": Object {
+    "attributes": Object {
+      "id": "123",
+    },
     "id": "123",
     "relationships": Object {
       "companies": Object {
@@ -165,6 +194,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -184,6 +214,24 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "lid": "666",
+        "name": "Compeon GmbH",
+      },
+      "lid": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "id": "667",
+        "name": "Compeon 4.0 GmbH",
+      },
+      "id": "667",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
@@ -192,6 +240,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -211,6 +260,24 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "id": "666",
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "id": "667",
+        "name": "Compeon 4.0 GmbH",
+      },
+      "id": "667",
+      "type": "companies",
+    },
+  ],
 }
 `;
 
@@ -219,6 +286,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -250,6 +318,40 @@ Object {
     },
     "type": "users",
   },
+  "included": Array [
+    Object {
+      "attributes": Object {
+        "id": "666",
+        "name": "Compeon GmbH",
+      },
+      "id": "666",
+      "type": "companies",
+    },
+    Object {
+      "attributes": Object {
+        "id": "667",
+        "name": "Compeon 4.0 GmbH",
+      },
+      "id": "667",
+      "type": "multiplier-organizations",
+    },
+    Object {
+      "attributes": Object {
+        "id": "777",
+        "name": "Arno Admin",
+      },
+      "id": "777",
+      "type": "users",
+    },
+    Object {
+      "attributes": Object {
+        "id": "333",
+        "name": "Ben Utzer",
+      },
+      "id": "333",
+      "type": "users",
+    },
+  ],
 }
 `;
 
@@ -258,6 +360,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -301,6 +404,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -416,6 +520,7 @@ Object {
   "data": Object {
     "attributes": Object {
       "firstName": "Nico",
+      "id": "511",
       "lastName": "Peters",
     },
     "id": "511",
@@ -479,6 +584,7 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Nico",
+        "id": "123",
         "lastName": "Peters",
       },
       "id": "123",
@@ -487,6 +593,7 @@ Object {
     Object {
       "attributes": Object {
         "firstName": "Frank",
+        "id": "134",
         "lastName": "Wüller",
       },
       "id": "134",
@@ -513,31 +620,22 @@ Object {
 }
 `;
 
-exports[`serialize with simple attributes with an array of resources and no attributes serializes the data 1`] = `
-Object {
-  "data": Array [
-    Object {
-      "id": "123",
-      "type": "user",
-    },
-    Object {
-      "id": "134",
-      "type": "user",
-    },
-  ],
-}
-`;
-
-exports[`serialize with simple attributes with empty attributes serializes no attributes key 1`] = `
+exports[`serialize with simple attributes with valid data serializes the data 1`] = `
 Object {
   "data": Object {
-    "id": "125",
+    "attributes": Object {
+      "email": "nico.peters@example.com",
+      "firstName": "Nico",
+      "id": "123",
+      "lastName": "Peters",
+    },
+    "id": "123",
     "type": "users",
   },
 }
 `;
 
-exports[`serialize with simple attributes with valid data serializes the data 1`] = `
+exports[`serialize with simple attributes with whitelisted attributes only serializes specified attributes 1`] = `
 Object {
   "data": Object {
     "attributes": Object {
