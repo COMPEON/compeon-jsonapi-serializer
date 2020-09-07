@@ -443,9 +443,24 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
+        "date": "19.03.2017",
+      },
+      "id": "95123",
+      "type": "versions",
+    },
+    Object {
+      "attributes": Object {
         "name": "Tag 1",
       },
       "id": "66",
+      "relationships": Object {
+        "version": Object {
+          "data": Object {
+            "id": "95123",
+            "type": "versions",
+          },
+        },
+      },
       "type": "tags",
     },
     Object {

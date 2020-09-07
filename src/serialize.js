@@ -33,6 +33,7 @@ const extractResourceInformation = (resource, attributeNames, relationshipNames)
     : pick(resource, [...attributeNames, ...relationshipNames])
 
   const polymorphicType = resource[COMPEON_API_JS_TYPE]
+
   const [relationships, attributes] = partition(permittedAttributes, (_, key) => (
     includes(relationshipNames, key)
   ))
