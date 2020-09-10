@@ -3,6 +3,7 @@ import {
   isEmpty,
   isPlainObject,
   pick,
+  omit,
   reduce
 } from 'lodash'
 
@@ -27,8 +28,12 @@ const removeDuplicateIncludes = included => {
 
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
-  const permittedAttributes = pick(resource, attributeNames)
+  const permittedAttributes = attributeNames == null
+    ? omit(resource, 'id')
+    : pick(resource, [...attributeNames, ...relationshipNames])
+
   const polymorphicType = resource[COMPEON_API_JS_TYPE]
+
   const [relationships, attributes] = partition(permittedAttributes, (_, key) => (
     includes(relationshipNames, key)
   ))
@@ -75,7 +80,7 @@ const serializeRelationships = (relationships, options) => (
 )
 
 const serializeResource = (type, resource, options, root = false) => {
-  const attributeOptions = options.attributes || []
+  const attributeOptions = options.attributes
   const relationshipOptions = options.relationships || {}
   const relationshipNames = Object.keys(relationshipOptions)
 
