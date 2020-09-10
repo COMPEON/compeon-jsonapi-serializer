@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added / Changed / Deleted
 
+## [0.1.0] - 2020-09-10
+### Changed
+- Relationships don't have to be listed in `attributes` anymore. ALL relationships will get rendered now. 
+- White-listing of attributes is not required anymore. ALL attributes will get serialized, when the `attributes` option isn't set.
+
 ## [0.0.15 ] - 2020-06-23
 ### Added
 - Add support for polymorphism from [@lagr](https://github.com/lagr).
