@@ -29,7 +29,7 @@ const removeDuplicateIncludes = included => {
 const extractResourceInformation = (resource, attributeNames, relationshipNames) => {
   const identifier = extractIdentifier(resource)
   const permittedAttributes = attributeNames == null
-    ? omit(resource, 'id')
+    ? omit(resource, ['id', 'lid'])
     : pick(resource, [...attributeNames, ...relationshipNames])
 
   const polymorphicType = resource[COMPEON_API_JS_TYPE]
