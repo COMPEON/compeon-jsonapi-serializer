@@ -21,7 +21,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "lid": "666",
         "name": "Compeon GmbH",
       },
       "lid": "666",
@@ -112,7 +111,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "lid": "612",
         "name": "Compeon GmbH",
       },
       "lid": "612",
@@ -207,7 +205,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "lid": "666",
         "name": "Compeon GmbH",
       },
       "lid": "666",
@@ -363,7 +360,6 @@ Object {
   "included": Array [
     Object {
       "attributes": Object {
-        "lid": "666",
         "name": "Compeon GmbH",
       },
       "lid": "666",
