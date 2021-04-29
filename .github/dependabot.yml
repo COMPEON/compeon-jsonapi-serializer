@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: tuesday
+    time: "04:00"
+    timezone: Europe/Berlin
+  ignore:
+  - dependency-name: rollup
+    versions:
+    - 2.38.2
+    - 2.42.3
+    - 2.42.4
+    - 2.45.1
+  - dependency-name: "@babel/plugin-proposal-object-rest-spread"
+    versions:
+    - 7.12.13
+    - 7.13.8
+  - dependency-name: "@babel/preset-env"
+    versions:
+    - 7.13.0
