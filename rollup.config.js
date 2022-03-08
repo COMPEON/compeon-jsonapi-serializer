@@ -6,12 +6,18 @@ export default {
     {
       file: 'dist/compeon-jsonapi-serializer.umd.js',
       name: 'jsonapi-serializer',
-      format: 'umd'
+      format: 'umd',
+      globals: {
+        lodash: 'lodash'
+      }
     },
     {
       file: 'dist/compeon-jsonapi-serializer.es.js',
       name: 'jsonapi-serializer',
-      format: 'es'
+      format: 'es',
+      globals: {
+        lodash: 'lodash'
+      }
     }
   ],
   plugins: [
@@ -21,5 +27,6 @@ export default {
       plugins: ['@babel/plugin-proposal-object-rest-spread'],
       presets: [['@babel/env', { modules: false }]]
     })
-  ]
+  ],
+  external: ['lodash']
 }
