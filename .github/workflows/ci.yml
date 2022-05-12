@@ -5,17 +5,9 @@ on: push
 jobs:
   Build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [10.x, 12.x]
+    container: node:16-alpine
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
       - uses: actions/checkout@v2
-      - run: npm install -g yarn
       - run: yarn install
       - run: yarn test
       - run: yarn lint
