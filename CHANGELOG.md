@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added / Changed / Deleted
 
+## [0.1.3] - 2021-08-31
+Updated dependencies
+
+## [0.1.2] - 2021-06-15
+Updated dependencies
+
+## [0.1.1] - 2021-06-11
+Updated dependencies
+
 ## [0.1.0] - 2020-09-10
 ### Changed
 - Relationships don't have to be listed in `attributes` anymore. ALL relationships will always get serialized.
