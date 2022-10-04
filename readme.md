@@ -6,7 +6,7 @@ A **client-side** serialization and deserialization library for JSON API which s
 
 ## Installation
 
-`yarn add @compeon/jsonapi-serializer`
+`yarn add @compeon-os/jsonapi-serializer`
 
 ## Usage
 
@@ -30,8 +30,8 @@ The resource type that will be rendered for the root resource.
 #### Example
 
 ```javascript
-import { serialize } from '@compeon/jsonapi-serializer'
-// or import { serialize, withPolymorphicType } from '@compeon/jsonapi-serializer'
+import { serialize } from '@compeon-os/jsonapi-serializer'
+// or import { serialize, withPolymorphicType } from '@compeon-os/jsonapi-serializer'
 
 const data = {
   firstName: 'Arthur',
@@ -140,7 +140,7 @@ deserialize(options)(json)
 #### Example
 
 ```javascript
-import { deserialize } from '@compeon/jsonapi-serializer'
+import { deserialize } from '@compeon-os/jsonapi-serializer'
 
 
 const json = {
