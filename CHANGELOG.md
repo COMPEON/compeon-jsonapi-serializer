@@ -1,6 +1,6 @@
 # COMPEON JSON API Serializer Changelog
 
-All notable changes to the @compeon/jsonapi-serializer will be documented in this file. New changes are always on top.
+All notable changes to the @compeon-os/jsonapi-serializer will be documented in this file. New changes are always on top.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
