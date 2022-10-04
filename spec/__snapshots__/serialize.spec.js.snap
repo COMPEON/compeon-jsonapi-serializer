@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`serialize with a 1:1 relationship with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "lid": "666",
           "type": "companies",
         },
@@ -18,9 +18,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "lid": "666",
@@ -31,16 +31,16 @@ Object {
 `;
 
 exports[`serialize with a 1:1 relationship with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "id": "666",
           "type": "companies",
         },
@@ -48,9 +48,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -61,16 +61,16 @@ Object {
 `;
 
 exports[`serialize with a 1:1 relationship with a polymorphic relationship serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "organization": Object {
-        "data": Object {
+    "relationships": {
+      "organization": {
+        "data": {
           "id": "666",
           "type": "companies",
         },
@@ -78,9 +78,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -91,16 +91,16 @@ Object {
 `;
 
 exports[`serialize with a 1:1 relationship with includes with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "1234",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "lid": "612",
           "type": "companies",
         },
@@ -108,9 +108,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "lid": "612",
@@ -121,16 +121,16 @@ Object {
 `;
 
 exports[`serialize with a 1:1 relationship with includes with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "1234",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "id": "612",
           "type": "companies",
         },
@@ -138,9 +138,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "612",
@@ -151,13 +151,13 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship when no relationship identifier is found™ ignores the faulty relationship and serializes the valid one 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "id": "123",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "companies": {
+        "data": [
+          {
             "id": "666",
             "type": "companies",
           },
@@ -166,9 +166,9 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
@@ -179,21 +179,21 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "companies": {
+        "data": [
+          {
             "lid": "666",
             "type": "companies",
           },
-          Object {
+          {
             "id": "667",
             "type": "companies",
           },
@@ -202,16 +202,16 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "lid": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -222,21 +222,21 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "companies": {
+        "data": [
+          {
             "id": "666",
             "type": "companies",
           },
-          Object {
+          {
             "id": "667",
             "type": "companies",
           },
@@ -245,16 +245,16 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -265,33 +265,33 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with a polymorphic relationship serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "colleagues": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "colleagues": {
+        "data": [
+          {
             "id": "777",
             "type": "users",
           },
-          Object {
+          {
             "id": "333",
             "type": "users",
           },
         ],
       },
-      "organizations": Object {
-        "data": Array [
-          Object {
+      "organizations": {
+        "data": [
+          {
             "id": "666",
             "type": "companies",
           },
-          Object {
+          {
             "id": "667",
             "type": "multiplier-organizations",
           },
@@ -300,30 +300,30 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
       "type": "multiplier-organizations",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Arno Admin",
       },
       "id": "777",
       "type": "users",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Ben Utzer",
       },
       "id": "333",
@@ -334,21 +334,21 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with includes with a local id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "companies": {
+        "data": [
+          {
             "lid": "666",
             "type": "companies",
           },
-          Object {
+          {
             "id": "667",
             "type": "companies",
           },
@@ -357,16 +357,16 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "lid": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -377,21 +377,21 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with includes with a normal id serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "companies": Object {
-        "data": Array [
-          Object {
+    "relationships": {
+      "companies": {
+        "data": [
+          {
             "id": "666",
             "type": "companies",
           },
-          Object {
+          {
             "id": "667",
             "type": "companies",
           },
@@ -400,16 +400,16 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon 4.0 GmbH",
       },
       "id": "667",
@@ -420,15 +420,15 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with includes with deeply nested relationships serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "id": "12",
           "type": "companies",
         },
@@ -436,22 +436,22 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "date": "19.03.2017",
       },
       "id": "95123",
       "type": "versions",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Tag 1",
       },
       "id": "66",
-      "relationships": Object {
-        "version": Object {
-          "data": Object {
+      "relationships": {
+        "version": {
+          "data": {
             "id": "95123",
             "type": "versions",
           },
@@ -459,26 +459,26 @@ Object {
       },
       "type": "tags",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "New sideposted tag",
       },
       "lid": "777",
       "type": "tags",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "12",
-      "relationships": Object {
-        "tags": Object {
-          "data": Array [
-            Object {
+      "relationships": {
+        "tags": {
+          "data": [
+            {
               "id": "66",
               "type": "tags",
             },
-            Object {
+            {
               "lid": "777",
               "type": "tags",
             },
@@ -492,23 +492,23 @@ Object {
 `;
 
 exports[`serialize with a 1:n relationship with includes with duplicate includes serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
     "id": "511",
-    "relationships": Object {
-      "company": Object {
-        "data": Object {
+    "relationships": {
+      "company": {
+        "data": {
           "id": "666",
           "type": "companies",
         },
       },
-      "employees": Object {
-        "data": Array [
-          Object {
+      "employees": {
+        "data": [
+          {
             "id": "152",
             "type": "users",
           },
@@ -517,23 +517,23 @@ Object {
     },
     "type": "users",
   },
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon GmbH",
       },
       "id": "666",
       "type": "companies",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "firstName": "Arno",
         "lastName": "Apitester",
       },
       "id": "152",
-      "relationships": Object {
-        "company": Object {
-          "data": Object {
+      "relationships": {
+        "company": {
+          "data": {
             "id": "666",
             "type": "companies",
           },
@@ -546,33 +546,33 @@ Object {
 `;
 
 exports[`serialize with simple attributes with a primitive data type serializes an empty resource 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "type": "users",
   },
 }
 `;
 
 exports[`serialize with simple attributes with an array of resources and attributes serializes the data 1`] = `
-Object {
-  "data": Array [
-    Object {
-      "attributes": Object {
+{
+  "data": [
+    {
+      "attributes": {
         "firstName": "Nico",
         "lastName": "Peters",
       },
       "id": "123",
       "type": "user",
     },
-    Object {
-      "attributes": Object {
+    {
+      "attributes": {
         "firstName": "Frank",
         "lastName": "Wüller",
       },
       "id": "134",
-      "relationships": Object {
-        "company": Object {
-          "data": Object {
+      "relationships": {
+        "company": {
+          "data": {
             "id": "66",
             "type": "companies",
           },
@@ -581,9 +581,9 @@ Object {
       "type": "user",
     },
   ],
-  "included": Array [
-    Object {
-      "attributes": Object {
+  "included": [
+    {
+      "attributes": {
         "name": "Compeon",
       },
       "id": "66",
@@ -594,8 +594,8 @@ Object {
 `;
 
 exports[`serialize with simple attributes with empty attributes list serializes no attributes 1`] = `
-Object {
-  "data": Object {
+{
+  "data": {
     "id": "123",
     "type": "users",
   },
@@ -603,9 +603,9 @@ Object {
 `;
 
 exports[`serialize with simple attributes with valid data serializes the data 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "email": "nico.peters@example.com",
       "firstName": "Nico",
       "lastName": "Peters",
@@ -617,9 +617,9 @@ Object {
 `;
 
 exports[`serialize with simple attributes with whitelisted attributes only serializes specified attributes 1`] = `
-Object {
-  "data": Object {
-    "attributes": Object {
+{
+  "data": {
+    "attributes": {
       "firstName": "Nico",
       "lastName": "Peters",
     },
