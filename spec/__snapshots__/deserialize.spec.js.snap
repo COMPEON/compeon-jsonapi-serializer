@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`deserialize when on the resource level with a resource array deserializes the links 1`] = `
-Array [
-  Object {
+[
+  {
     "firstName": "Nico",
     "id": "123",
     "lastName": "Peters",
-    "links": Object {
+    "links": {
       "self": "http://some-url.com/123",
     },
   },
-  Object {
+  {
     "firstName": "Karl",
     "id": "124",
     "lastName": "Maschmann",
-    "links": Object {
+    "links": {
       "self": "http://some-url.com/124",
     },
   },
@@ -22,19 +22,19 @@ Array [
 `;
 
 exports[`deserialize when on the resource level with a single resource deserializes the links 1`] = `
-Object {
+{
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
-  "links": Object {
+  "links": {
     "self": "http://some-url.com/123",
   },
 }
 `;
 
 exports[`deserialize with a 1:1 relationship with a local id deserializes the json 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "lid": "666",
   },
   "firstName": "Nico",
@@ -44,8 +44,8 @@ Object {
 `;
 
 exports[`deserialize with a 1:1 relationship with a normal id deserializes the json 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "id": "666",
   },
   "firstName": "Nico",
@@ -55,8 +55,8 @@ Object {
 `;
 
 exports[`deserialize with a 1:1 relationship with includes with a local id deserializes the json 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "city": "Düsseldorf",
     "lid": "666",
     "name": "Compeon GmbH",
@@ -68,8 +68,8 @@ Object {
 `;
 
 exports[`deserialize with a 1:1 relationship with includes with a normal id deserializes the json 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "city": "Düsseldorf",
     "id": "666",
     "name": "Compeon GmbH",
@@ -81,12 +81,12 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with a local id deserializes the json 1`] = `
-Object {
-  "companies": Array [
-    Object {
+{
+  "companies": [
+    {
       "lid": "666",
     },
-    Object {
+    {
       "id": "667",
     },
   ],
@@ -97,12 +97,12 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with a normal id deserializes the json 1`] = `
-Object {
-  "companies": Array [
-    Object {
+{
+  "companies": [
+    {
       "id": "666",
     },
-    Object {
+    {
       "id": "667",
     },
   ],
@@ -113,14 +113,14 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with deeply nested relationships deserializes the json 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "id": "666",
-    "tags": Array [
-      Object {
+    "tags": [
+      {
         "id": "12",
       },
-      Object {
+      {
         "id": "17",
       },
     ],
@@ -132,12 +132,12 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with deeply nested relationships does not deserialize attributes directly included in a relation 1`] = `
-Object {
-  "company": Object {
+{
+  "company": {
     "id": "666",
     "name": "Compeon Gmbh",
-    "tags": Array [
-      Object {
+    "tags": [
+      {
         "id": "12",
       },
     ],
@@ -149,14 +149,14 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with includes with a local id deserializes the json 1`] = `
-Object {
-  "companies": Array [
-    Object {
+{
+  "companies": [
+    {
       "city": "Düsseldorf",
       "lid": "666",
       "name": "Compeon GmbH",
     },
-    Object {
+    {
       "city": "Düsseldorf",
       "id": "667",
       "name": "Compeon 4.0 GmbH",
@@ -169,14 +169,14 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with includes with a normal id deserializes the json 1`] = `
-Object {
-  "companies": Array [
-    Object {
+{
+  "companies": [
+    {
       "city": "Düsseldorf",
       "id": "666",
       "name": "Compeon GmbH",
     },
-    Object {
+    {
       "city": "Düsseldorf",
       "id": "667",
       "name": "Compeon 4.0 GmbH",
@@ -189,9 +189,9 @@ Object {
 `;
 
 exports[`deserialize with a 1:n relationship with relationships inside an array of resources deserializes the json 1`] = `
-Array [
-  Object {
-    "company": Object {
+[
+  {
+    "company": {
       "city": "Düsseldorf",
       "lid": "666",
       "name": "Compeon GmbH",
@@ -200,8 +200,8 @@ Array [
     "id": "123",
     "lastName": "Peters",
   },
-  Object {
-    "company": Object {
+  {
+    "company": {
       "city": "Düsseldorf",
       "lid": "666",
       "name": "Compeon GmbH",
@@ -209,12 +209,12 @@ Array [
     "firstName": "Frank",
     "id": "234",
     "lastName": "Wüller",
-    "tags": Array [
-      Object {
+    "tags": [
+      {
         "id": "912",
         "name": "Banking",
       },
-      Object {
+      {
         "id": "56",
         "name": "CEO",
       },
@@ -224,17 +224,17 @@ Array [
 `;
 
 exports[`deserialize with a 1:n relationship with relationships with links deserializes the json 1`] = `
-Object {
-  "companies": Array [
-    Object {
+{
+  "companies": [
+    {
       "city": "Düsseldorf",
       "id": "666",
-      "links": Object {
+      "links": {
         "self": "htpp://ulf.de/companies/666",
       },
       "name": "Compeon GmbH",
     },
-    Object {
+    {
       "city": "Düsseldorf",
       "id": "667",
       "name": "Compeon 4.0 GmbH",
@@ -247,13 +247,13 @@ Object {
 `;
 
 exports[`deserialize with an array of resources with valid attributes deserializes the json 1`] = `
-Array [
-  Object {
+[
+  {
     "firstName": "Nico",
     "id": "123",
     "lastName": "Peters",
   },
-  Object {
+  {
     "firstName": "Frank",
     "id": "234",
     "lastName": "Wüller",
@@ -262,8 +262,8 @@ Array [
 `;
 
 exports[`deserialize with empty relationships renders the empty relationships 1`] = `
-Object {
-  "colleagues": Array [],
+{
+  "colleagues": [],
   "company": null,
   "firstName": "Nico",
   "id": "123",
@@ -272,27 +272,27 @@ Object {
 `;
 
 exports[`deserialize with links when on the root level with a resource array deserializes the links 1`] = `
-Array [
-  Object {
+[
+  {
     "firstName": "Nico",
     "id": "123",
     "lastName": "Peters",
-    "rootLinks": Object {
-      "dashboard": Object {
-        "meta": Object {
+    "rootLinks": {
+      "dashboard": {
+        "meta": {
           "title": "Dashboard",
         },
         "url": "http://example.com",
       },
     },
   },
-  Object {
+  {
     "firstName": "Karl",
     "id": "124",
     "lastName": "Maschmann",
-    "rootLinks": Object {
-      "dashboard": Object {
-        "meta": Object {
+    "rootLinks": {
+      "dashboard": {
+        "meta": {
           "title": "Dashboard",
         },
         "url": "http://example.com",
@@ -303,13 +303,13 @@ Array [
 `;
 
 exports[`deserialize with links when on the root level with a single resource deserializes the links 1`] = `
-Object {
+{
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
-  "rootLinks": Object {
-    "dashboard": Object {
-      "meta": Object {
+  "rootLinks": {
+    "dashboard": {
+      "meta": {
         "title": "Dashboard",
       },
       "url": "http://example.com",
@@ -319,7 +319,7 @@ Object {
 `;
 
 exports[`deserialize with relationships that have no identifier renders an empty relationship 1`] = `
-Object {
+{
   "company": null,
   "firstName": "Nico",
   "id": "123",
@@ -328,33 +328,33 @@ Object {
 `;
 
 exports[`deserialize with root and resource level links with a resource array deserializes the links 1`] = `
-Array [
-  Object {
+[
+  {
     "firstName": "Nico",
     "id": "123",
     "lastName": "Peters",
-    "links": Object {
+    "links": {
       "self": "http://some-url.com/123",
     },
-    "rootLinks": Object {
-      "dashboard": Object {
-        "meta": Object {
+    "rootLinks": {
+      "dashboard": {
+        "meta": {
           "title": "Dashboard",
         },
         "url": "http://example.com",
       },
     },
   },
-  Object {
+  {
     "firstName": "Karl",
     "id": "124",
     "lastName": "Maschmann",
-    "links": Object {
+    "links": {
       "self": "http://some-url.com/124",
     },
-    "rootLinks": Object {
-      "dashboard": Object {
-        "meta": Object {
+    "rootLinks": {
+      "dashboard": {
+        "meta": {
           "title": "Dashboard",
         },
         "url": "http://example.com",
@@ -365,16 +365,16 @@ Array [
 `;
 
 exports[`deserialize with root and resource level links with a single resource deserializes the links 1`] = `
-Object {
+{
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
-  "links": Object {
+  "links": {
     "self": "http://some-url.com/123",
   },
-  "rootLinks": Object {
-    "dashboard": Object {
-      "meta": Object {
+  "rootLinks": {
+    "dashboard": {
+      "meta": {
         "title": "Dashboard",
       },
       "url": "http://example.com",
@@ -384,10 +384,10 @@ Object {
 `;
 
 exports[`deserialize with simple attributes with JSONAPI errors with an error array returns the errors 1`] = `
-Array [
-  Object {
+[
+  {
     "id": "123",
-    "links": Object {
+    "links": {
       "about": "htpp://ulf.de",
     },
     "title": "Title",
@@ -395,12 +395,12 @@ Array [
 ]
 `;
 
-exports[`deserialize with simple attributes with invalid attributes when data does not exist deserializes the json 1`] = `Object {}`;
+exports[`deserialize with simple attributes with invalid attributes when data does not exist deserializes the json 1`] = `{}`;
 
-exports[`deserialize with simple attributes with invalid attributes when data is empty deserializes the json 1`] = `Object {}`;
+exports[`deserialize with simple attributes with invalid attributes when data is empty deserializes the json 1`] = `{}`;
 
 exports[`deserialize with simple attributes with valid attributes deserializes the json 1`] = `
-Object {
+{
   "firstName": "Nico",
   "id": "123",
   "lastName": "Peters",
